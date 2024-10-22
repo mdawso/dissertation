@@ -1,4 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmh3ltyxptck"]
+[gd_scene load_steps=3 format=3 uid="uid://dmh3ltyxptck"]
+
+[sub_resource type="GDScript" id="GDScript_yv03p"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/game.tscn\")
+"
 
 [sub_resource type="GDScript" id="GDScript_5k0wr"]
 script/source = "extends Button
@@ -38,10 +45,12 @@ layout_mode = 2
 [node name="PlayButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play"
+script = SubResource("GDScript_yv03p")
 
 [node name="QuitButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
 script = SubResource("GDScript_5k0wr")
 
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainer/PlayButton" to="MainMenu/CenterContainer/VBoxContainer/PlayButton" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainer/QuitButton" to="MainMenu/CenterContainer/VBoxContainer/QuitButton" method="_on_pressed"]
