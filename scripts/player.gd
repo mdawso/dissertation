@@ -1,10 +1,17 @@
 extends CharacterBody2D
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var timer_label: Label = %TimerLabel
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var timer : float
+var timerRunning : bool
+
+func _ready() -> void:
+	timer = 0
+	timerRunning = true
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -26,3 +33,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	move_and_slide()
+	if timerRunning:
+		increment_timer(delta)
+	
+func increment_timer(delta):
+	timer += delta
+	timer_label.text = str(snapped(timer, 0.01))
+	
+func stop_timer():
+	timerRunning = false

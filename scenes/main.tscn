@@ -1,4 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmh3ltyxptck"]
+[gd_scene load_steps=5 format=3 uid="uid://dmh3ltyxptck"]
+
+[ext_resource type="Theme" uid="uid://11aga3604cn0" path="res://scenes/ui_theme.tres" id="1_ye4hc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xhjc7"]
+font_size = 56
 
 [sub_resource type="GDScript" id="GDScript_yv03p"]
 script/source = "extends Button
@@ -38,19 +43,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/CenterContainer"]
+[node name="VBoxContainerTop" type="VBoxContainer" parent="MainMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MainMenu/CenterContainer/VBoxContainerTop"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "The Game"
+label_settings = SubResource("LabelSettings_xhjc7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainerButtons" type="VBoxContainer" parent="MainMenu/CenterContainer/VBoxContainerTop"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
 layout_mode = 2
+theme = ExtResource("1_ye4hc")
 text = "Play"
 script = SubResource("GDScript_yv03p")
 
-[node name="QuitButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
 layout_mode = 2
+theme = ExtResource("1_ye4hc")
 text = "Quit"
 script = SubResource("GDScript_5k0wr")
 
-[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainer/PlayButton" to="MainMenu/CenterContainer/VBoxContainer/PlayButton" method="_on_pressed"]
-[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainer/QuitButton" to="MainMenu/CenterContainer/VBoxContainer/QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" method="_on_pressed"]
