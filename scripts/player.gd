@@ -12,6 +12,7 @@ var timerRunning : bool
 func _ready() -> void:
 	timer = 0
 	timerRunning = true
+	Globals.Player = self
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

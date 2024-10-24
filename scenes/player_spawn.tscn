@@ -9,7 +9,7 @@ const PLAYER = preload(\"res://scenes/player.tscn\")
 func _ready() -> void:
 	var newPlayer = PLAYER.instantiate()
 	newPlayer.global_position = global_position
-	get_parent().add_child.call_deferred(newPlayer)
+	get_parent().get_parent().add_child.call_deferred(newPlayer)
 "
 
 [node name="PlayerSpawn" type="Node2D"]

@@ -9,7 +9,7 @@ const AI_PLAYER = preload(\"res://scenes/ai_player.tscn\")
 func _ready() -> void:
 	var newPlayer = AI_PLAYER.instantiate()
 	newPlayer.global_position = global_position
-	get_parent().add_child.call_deferred(newPlayer)
+	get_parent().get_parent().add_child.call_deferred(newPlayer)
 "
 
 [node name="AISpawn" type="Node2D"]
