@@ -1,7 +1,7 @@
 extends Node
 
 var server : UDPServer
-var peers : Array = []
+var peer : PacketPeerUDP
 
 const UDP_IP : String = "127.0.0.1"
 const UDP_PORT : int = 9876
@@ -10,13 +10,12 @@ func _ready() -> void:
 	server = UDPServer.new()
 	server.listen(UDP_PORT, UDP_IP)
 
-func _process(_delta : float) -> void:
+func _physics_process(_delta : float) -> void:
 	server.poll()
 	
-	# handle incoming connections
+	# handle incoming connection
 	if server.is_connection_available():
-		var peer: PacketPeerUDP = server.take_connection()
-		peers.append(peer)
+		peer = server.take_connection()
 		
 		# Recieve data
 		var packet = peer.get_packet()
@@ -25,5 +24,9 @@ func _process(_delta : float) -> void:
 		
 		# Send data
 		peer.put_packet("Godot Handshake".to_ascii_buffer())
-
+	
+	if peer:
+		if Globals.Player:
+			var player = Globals.Player
+			peer.put_packet(str(player.position).to_ascii_buffer())
 	

@@ -10,9 +10,13 @@ sock.connect((UDP_IP, UDP_PORT))
 # send a message
 sock.send("Python Handshake".encode())
 
+# receive a message
+data, addr = sock.recvfrom(1024)
+print("Received message: ", data.decode())
+
 while True:
     try:
-        # receive a message
+        # recieve messages from server
         data, addr = sock.recvfrom(1024)
         print("Received message: ", data.decode())
     except KeyboardInterrupt:
