@@ -17,7 +17,7 @@ func _physics_process(_delta : float) -> void:
 	if server.is_connection_available():
 		peer = server.take_connection()
 		
-		# Recieve data
+		# Receive data
 		var packet = peer.get_packet()
 		print("Accepted peer: %s:%s" % [peer.get_packet_ip(), peer.get_packet_port()])
 		print("Received data: %s" % [packet.get_string_from_utf8()])
@@ -26,7 +26,7 @@ func _physics_process(_delta : float) -> void:
 		peer.put_packet("Godot Handshake".to_ascii_buffer())
 	
 	if peer:
-		if Globals.Player:
-			var player = Globals.Player
-			peer.put_packet(str(player.position).to_ascii_buffer())
+		var packet = peer.get_packet()
+		if packet:
+			print("Recieved data: %s" % [packet.get_string_from_utf8()])
 	

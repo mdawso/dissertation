@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var timer_label: Label = %TimerLabel
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -400
 
 var timer : float
 var timerRunning : bool
