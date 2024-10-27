@@ -23,17 +23,5 @@ send_and_print("Python Handshake".encode())
 # receive a message
 receive_and_print()
 
-input()
-
-# loop to keep the client running
-i = 1
-while True:
-    try:
-        #receive_and_print()
-        send_and_print(b'Python message ' + str(i).encode())
-        i += 1
-    except KeyboardInterrupt:
-        break
-
 # close the connection
 sock.close()

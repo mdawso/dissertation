@@ -29,4 +29,3 @@ func _physics_process(_delta : float) -> void:
 		var packet = peer.get_packet()
 		if packet:
 			print("Recieved data: %s" % [packet.get_string_from_utf8()])
-	

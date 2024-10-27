@@ -18,8 +18,8 @@ config/icon="res://assets/ai_player.png"
 
 [autoload]
 
-GdServer="*res://scripts/gd_server.gd"
 Globals="*res://scripts/globals.gd"
+GdServer="*res://scripts/gd_server.gd"
 
 [display]
 
