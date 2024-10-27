@@ -12,6 +12,8 @@ sock.listen(1)
 
 # keep trying until a connection is established
 print("Waiting for connection...")
+
+
 conn, addr = sock.accept()
 print("Connection established with: ", addr)
 
@@ -21,8 +23,4 @@ while True:
     if data:
         print("Received data: ", data.decode())
 
-# send data to the client
-conn.send("Hello from server!".encode())
-
-# close the connection
 conn.close()
