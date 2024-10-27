@@ -1,4 +1,4 @@
-import socket
+import socket, time
 
 TCP_IP = "127.0.0.1"
 TCP_PORT = 9876
@@ -19,8 +19,11 @@ print("Connection established with: ", addr)
 
 # receive data from the client
 while True:
-    data = conn.recv(1024)
-    if data:
-        print("Received data: ", data.decode())
+    #data = conn.recv(1024)
+    #if data:
+        #print("Received data: ", data.decode())
+    conn.send("Hello".encode())
+    # wait 1 second
+    time.sleep(1)
 
 conn.close()
