@@ -12,7 +12,7 @@ func _ready() -> void:
 	peer = StreamPeerTCP.new()
 	peer.connect_to_host(TCP_IP,TCP_PORT)
 	peer.poll()
-	if peer.get_status() == StreamPeerTCP.Status.STATUS_CONNECTED:
+	if peer.get_status() == 2: # 2 is status connected
 		print("%s Connected" % [self])
 		peer.put_data(("Hello from %s" % [self]).to_ascii_buffer())
 
@@ -20,11 +20,11 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		
-	if peer:
-		peer.poll()
-		var data = peer.get_data(8)
-		if data:
-			print(data)
 
 	move_and_slide()
+	
+	peer.poll()
+	var available_bytes = peer.get_available_bytes()
+	if available_bytes > 0:
+		print(peer.get_string(available_bytes))
+		

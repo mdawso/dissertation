@@ -1,4 +1,4 @@
-import socket, time
+import socket, time, random
 
 TCP_IP = "127.0.0.1"
 TCP_PORT = 9876
@@ -13,17 +13,14 @@ sock.listen(1)
 # keep trying until a connection is established
 print("Waiting for connection...")
 
-
 conn, addr = sock.accept()
 print("Connection established with: ", addr)
+data = conn.recv(1024).decode()
+print("Received data: ", data)
 
-# receive data from the client
+# send a response
 while True:
-    #data = conn.recv(1024)
-    #if data:
-        #print("Received data: ", data.decode())
-    conn.send("Hello".encode())
-    # wait 1 second
-    time.sleep(1)
+    data = input("Enter a message to send: ")
+    conn.send(data.encode())
 
 conn.close()
