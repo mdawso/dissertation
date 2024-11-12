@@ -16,3 +16,10 @@ shape = SubResource("RectangleShape2D_dr2ca")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wvl6q")
+
+[node name="StateLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -20.0
+offset_top = -35.0
+offset_right = 20.0
+offset_bottom = -12.0

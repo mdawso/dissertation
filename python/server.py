@@ -1,4 +1,5 @@
 import socket, time, random, json
+import model
 
 TCP_IP = "127.0.0.1"
 TCP_PORT = 9876
@@ -13,17 +14,14 @@ sock.listen(1)
 # keep trying until a connection is established
 print("Waiting for connection...")
 
+# initial handshake
 conn, addr = sock.accept()
 print("Connection established with: ", addr)
 data = conn.recv(1024).decode()
 print("Received data: ", data)
 
-# send a response
-# this is just a test that randomly moves the ai
-while True:
-    data = {"move": random.choice(["left", "right", "jump"])}
-    print("Sent data: ", data)
-    conn.send(json.dumps(data).encode())
-    print(conn.recv(1024).decode()) # recieve data to ensure both client and server are in sync
+data = {"move": random.choice(["left", "right", "jump"])}
 
-conn.close()
+# send data to client
+conn.send(json.dumps(data).encode())
+print("Sent data: ", data)
