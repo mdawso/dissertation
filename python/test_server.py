@@ -22,8 +22,12 @@ print("Received data: ", data)
 while True:
     
     #recieve data
-    recievedData = conn.recv(1024).decode()
-    print("Recieved data: ", recievedData)
+    recievedData = conn.recv(4096).decode()
+    recievedDataDecoded = json.loads(recievedData)
+    
+    distToFinishLine : float = recievedDataDecoded["distToFinishLine"]
+    finishLineVisible : bool = recievedDataDecoded["finishLineVisible"]
+    visibleTiles : dict = recievedDataDecoded["visibleTiles"]
     
     #send data
     data = {"direction": random.choice(["none", "left", "right"]), "jump": random.choice([True, False])}

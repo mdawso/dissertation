@@ -7,7 +7,9 @@ const TCP_PORT : int = 9876
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-const SIGHT_RANGE = 2
+const SIGHT_RANGE = 4
+
+const gatheringData = true # bool to toggle all data gathering for model, debug
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
 
@@ -31,50 +33,55 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	
 	# gather data
-	var visibleTiles : Dictionary = {}
-	var distToFinishLine : float = 0
-	var finishLineVisible : bool = false
 	
-	if debug_visible_tile_labels.visible:
-		for n in debug_visible_tile_labels.get_children():
-			debug_visible_tile_labels.remove_child(n)
-			n.queue_free() 
+	var dataToSend : String = "No Data!"
 	
-	if Globals.Map:
+	if gatheringData:
+	
+		var visibleTiles : Dictionary = {}
+		var distToFinishLine : float = 0
+		var finishLineVisible : bool = false
 		
-		var playerPosOnMap : Vector2 = Globals.Map.local_to_map(position)
+		if debug_visible_tile_labels.visible:
+			for n in debug_visible_tile_labels.get_children():
+				debug_visible_tile_labels.remove_child(n)
+				n.queue_free() 
 		
-		for x in range(playerPosOnMap.x - SIGHT_RANGE, playerPosOnMap.x + SIGHT_RANGE + 1): # +1 because the max is exclusive
-			for y in range(playerPosOnMap.y - SIGHT_RANGE, playerPosOnMap.y + SIGHT_RANGE + 1):
-				
-				var coordinates = Vector2i(x,y)
-				var cellTileData = Globals.Map.get_cell_tile_data(coordinates)
-				
-				if cellTileData:
-					if cellTileData.get_collision_polygons_count(0) > 0:
-						var lenOfVecToTile = (Globals.Map.map_to_local(coordinates) - self.position).length()
-						visibleTiles[coordinates] = lenOfVecToTile
-				else:
-					visibleTiles[coordinates] = false
+		if Globals.Map:
+			
+			var playerPosOnMap : Vector2 = Globals.Map.local_to_map(position)
+			
+			for x in range(playerPosOnMap.x - SIGHT_RANGE, playerPosOnMap.x + SIGHT_RANGE + 1): # +1 because the max is exclusive
+				for y in range(playerPosOnMap.y - SIGHT_RANGE, playerPosOnMap.y + SIGHT_RANGE + 1):
 					
-				if debug_visible_tile_labels.visible:
-					var newLabel = Label.new()
-					newLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-					newLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-					newLabel.position = Globals.Map.map_to_local(coordinates) + Vector2(-5,-12.5) # this is added to line the numbers up to the centres of the tiles
-					newLabel.text = str(1 if visibleTiles[coordinates] else 0)
-					debug_visible_tile_labels.add_child(newLabel)
-	
-	if Globals.FinishLine:
-		var vecToFinishLine = Globals.FinishLine.position - self.position
-		finish_line_raycast.set_target_position(vecToFinishLine)
-		distToFinishLine = vecToFinishLine.length()
-		finishLineVisible = not finish_line_raycast.is_colliding()
+					var coordinates = Vector2i(x,y)
+					var cellTileData = Globals.Map.get_cell_tile_data(coordinates)
+					
+					if cellTileData:
+						if cellTileData.get_collision_polygons_count(0) > 0:
+							var lenOfVecToTile = (Globals.Map.map_to_local(coordinates) - self.position).length()
+							visibleTiles[coordinates] = lenOfVecToTile
+					else:
+						visibleTiles[coordinates] = false
+						
+					if debug_visible_tile_labels.visible:
+						var newLabel = Label.new()
+						newLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+						newLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+						newLabel.position = Globals.Map.map_to_local(coordinates) + Vector2(-5,-12.5) # this is added to line the numbers up to the centres of the tiles
+						newLabel.text = str(1 if visibleTiles[coordinates] else 0)
+						debug_visible_tile_labels.add_child(newLabel)
 		
+		if Globals.FinishLine:
+			var vecToFinishLine = Globals.FinishLine.position - self.position
+			finish_line_raycast.set_target_position(vecToFinishLine)
+			distToFinishLine = vecToFinishLine.length()
+			finishLineVisible = not finish_line_raycast.is_colliding()
+			
+			
+		var gatheredDataDict = {"visibleTiles": visibleTiles, "distToFinishLine": distToFinishLine, "finishLineVisible": finishLineVisible}
+		dataToSend = JSON.stringify(gatheredDataDict)
 		
-	var gatheredDataDict = {"visibleTiles": visibleTiles, "distToFinishLine": distToFinishLine, "finishLineVisible": finishLineVisible}
-	var dataToSend = JSON.stringify(gatheredDataDict)
-	
 	peer.poll()
 	
 	if peer.get_status() == 2:
