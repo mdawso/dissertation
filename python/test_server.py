@@ -31,7 +31,8 @@ while True:
     
     #send data
     data = {"direction": random.choice(["none", "left", "right"]), "jump": random.choice([True, False])}
-    conn.send(json.dumps(data).encode())
+    jsonData = json.dumps(data) + "|"
+    conn.send(jsonData.encode())
     print("Sent data: ", data)
 
 conn.close()

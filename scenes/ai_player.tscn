@@ -21,6 +21,17 @@ texture = ExtResource("1_wvl6q")
 unique_name_in_owner = true
 target_position = Vector2(50, -50)
 
+[node name="DEBUG_FinishLineVector" type="Line2D" parent="FinishLineRaycast"]
+unique_name_in_owner = true
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.0
+
+[node name="DEBUG_FinishLineVectorLengthLabel" type="Label" parent="FinishLineRaycast/DEBUG_FinishLineVector"]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+
 [node name="DEBUG_VisibleTileLabels" type="Node2D" parent="."]
 unique_name_in_owner = true
 top_level = true

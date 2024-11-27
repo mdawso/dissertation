@@ -7,12 +7,14 @@ const TCP_PORT : int = 9876
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-const SIGHT_RANGE = 4
+const SIGHT_RANGE = 2
 
 const gatheringData = true # bool to toggle all data gathering for model, debug
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
 
+@onready var debug_finish_line_vector: Line2D = %DEBUG_FinishLineVector
+@onready var debug_finish_line_vector_length_label: Label = %DEBUG_FinishLineVectorLengthLabel
 @onready var debug_state_label: Label = %DEBUG_StateLabel
 @onready var debug_visible_tile_labels: Node2D = %DEBUG_VisibleTileLabels
 
@@ -77,7 +79,12 @@ func _physics_process(delta: float) -> void:
 			finish_line_raycast.set_target_position(vecToFinishLine)
 			distToFinishLine = vecToFinishLine.length()
 			finishLineVisible = not finish_line_raycast.is_colliding()
-			
+			if debug_finish_line_vector.visible:
+				debug_finish_line_vector.points[1] = vecToFinishLine
+				debug_finish_line_vector.default_color = Color.GREEN if finishLineVisible else Color.RED
+			if debug_finish_line_vector_length_label.visible:
+				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
+				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 			
 		var gatheredDataDict = {"visibleTiles": visibleTiles, "distToFinishLine": distToFinishLine, "finishLineVisible": finishLineVisible}
 		dataToSend = JSON.stringify(gatheredDataDict)
@@ -92,11 +99,18 @@ func _physics_process(delta: float) -> void:
 		
 		var available_bytes = peer.get_available_bytes()
 		if available_bytes > 0:
+			
 			var packetString = peer.get_string(available_bytes)
-			var data = JSON.parse_string(packetString)
 			print("Recieved data: " + packetString)
 			
-			if data:
+			var splitStrings : Array = packetString.split("|",false) # this handles a case where multiple json strings are sent in one packet
+			
+			if splitStrings.size() > 1:
+				print("Multiple json strngs detected!")
+			
+			for s in splitStrings:
+				
+				var data = JSON.parse_string(s)
 				
 				if debug_state_label.visible:
 					debug_state_label.text = "direction : " + data.direction + "\n" + "jump : " + str(data.jump)
@@ -108,4 +122,7 @@ func _physics_process(delta: float) -> void:
 				elif data.jump == true and is_on_floor():
 					velocity.y = JUMP_VELOCITY
 
-	move_and_slide()
+				move_and_slide()
+	
+	if peer.get_status() != 2: # we still want to apply gravity if the ai is not connected
+		move_and_slide()
