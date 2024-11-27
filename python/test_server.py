@@ -18,12 +18,16 @@ print("Connection established with: ", addr)
 data = conn.recv(1024).decode()
 print("Received data: ", data)
 
-# send a response
 # this is just a test that randomly moves the ai
 while True:
-    data = {"move": random.choice(["left", "right", "jump"])}
-    print("Sent data: ", data)
+    
+    #recieve data
+    recievedData = conn.recv(1024).decode()
+    print("Recieved data: ", recievedData)
+    
+    #send data
+    data = {"direction": random.choice(["none", "left", "right"]), "jump": random.choice([True, False])}
     conn.send(json.dumps(data).encode())
-    print(conn.recv(1024).decode()) # recieve data to ensure both client and server are in sync
+    print("Sent data: ", data)
 
 conn.close()

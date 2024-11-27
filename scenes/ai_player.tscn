@@ -17,9 +17,24 @@ shape = SubResource("RectangleShape2D_dr2ca")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wvl6q")
 
-[node name="StateLabel" type="Label" parent="."]
+[node name="FinishLineRaycast" type="RayCast2D" parent="."]
 unique_name_in_owner = true
-offset_left = -20.0
-offset_top = -35.0
-offset_right = 20.0
-offset_bottom = -12.0
+target_position = Vector2(50, -50)
+
+[node name="DEBUG_VisibleTileLabels" type="Node2D" parent="."]
+unique_name_in_owner = true
+top_level = true
+
+[node name="DEBUG_CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.5
+offset_right = 40.5
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+text = "state label"
