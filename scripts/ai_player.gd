@@ -30,6 +30,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	move_and_slide()
+	
 	# apply gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -75,7 +77,7 @@ func _physics_process(delta: float) -> void:
 						debug_visible_tile_labels.add_child(newLabel)
 		
 		if Globals.FinishLine:
-			var vecToFinishLine = Globals.FinishLine.position - self.position
+			var vecToFinishLine = Globals.FinishLine.global_position - self.global_position
 			finish_line_raycast.set_target_position(vecToFinishLine)
 			distToFinishLine = vecToFinishLine.length()
 			finishLineVisible = not finish_line_raycast.is_colliding()
@@ -88,7 +90,7 @@ func _physics_process(delta: float) -> void:
 			
 		var gatheredDataDict = {"visibleTiles": visibleTiles, "distToFinishLine": distToFinishLine, "finishLineVisible": finishLineVisible}
 		dataToSend = JSON.stringify(gatheredDataDict)
-		
+	
 	peer.poll()
 	
 	if peer.get_status() == 2:
@@ -121,8 +123,3 @@ func _physics_process(delta: float) -> void:
 					velocity.x = SPEED
 				elif data.jump == true and is_on_floor():
 					velocity.y = JUMP_VELOCITY
-
-				move_and_slide()
-	
-	if peer.get_status() != 2: # we still want to apply gravity if the ai is not connected
-		move_and_slide()
