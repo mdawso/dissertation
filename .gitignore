@@ -3,3 +3,4 @@
 /android/
 *.tmp
 /python/__pycache__
+export_presets.cfg

@@ -20,8 +20,4 @@ print("Connection established with: ", addr)
 data = conn.recv(1024).decode()
 print("Received data: ", data)
 
-data = {"move": random.choice(["left", "right", "jump"])}
-
-# send data to client
-conn.send(json.dumps(data).encode())
-print("Sent data: ", data)
+# recieve starting data from client
