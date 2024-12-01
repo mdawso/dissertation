@@ -8,8 +8,9 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 const SIGHT_RANGE = 2
+var numOfObservations = (2*SIGHT_RANGE+1)**2
 
-const gatheringData = true # bool to toggle all data gathering for model, debug
+const observing = true # bool to toggle all data gathering for model, debug
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
 
@@ -26,7 +27,8 @@ func _ready() -> void:
 	peer.poll()
 	if peer.get_status() == 2: # 2 is status connected
 		print("%s Connected" % [self])
-		peer.put_data(("Hello from %s" % [self]).to_ascii_buffer())
+		var setupData = {"numOfObservations":numOfObservations, "numOfActions": 5}
+		peer.put_data(JSON.stringify(setupData).to_ascii_buffer())
 
 func _physics_process(delta: float) -> void:
 	
@@ -40,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	
 	var dataToSend : String = "No Data!"
 	
-	if gatheringData:
+	if observing:
 	
 		var visibleTiles : Dictionary = {}
 		var distToFinishLine : float = 0
@@ -105,6 +107,7 @@ func _physics_process(delta: float) -> void:
 			var packetString = peer.get_string(available_bytes)
 			print("Recieved data: " + packetString)
 			
+			# FIXME this is a horrible way of doing this make a proper buffer you poof
 			var splitStrings : Array = packetString.split("|",false) # this handles a case where multiple json strings are sent in one packet
 			
 			if splitStrings.size() > 1:
