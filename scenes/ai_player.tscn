@@ -8,7 +8,7 @@ size = Vector2(16, 16)
 
 [node name="AIPlayer" type="CharacterBody2D"]
 collision_layer = 8
-collision_mask = 5
+collision_mask = 21
 script = ExtResource("1_j44xe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://brbdt22mxhc63"]
+
+[sub_resource type="GDScript" id="GDScript_jmt81"]
+script/source = "extends Area2D
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.has_method(\"reset\"):
+		body.reset()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upmf2"]
+size = Vector2(1028, 40)
+
+[node name="KillPlane" type="Area2D"]
+collision_layer = 16
+collision_mask = 10
+script = SubResource("GDScript_jmt81")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_upmf2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

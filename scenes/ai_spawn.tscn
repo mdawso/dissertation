@@ -7,7 +7,7 @@ const AI_PLAYER = preload(\"res://scenes/ai_player.tscn\")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var newPlayer = AI_PLAYER.instantiate()
+	var newPlayer : CharacterBody2D = AI_PLAYER.instantiate()
 	newPlayer.global_position = global_position
 	get_parent().get_parent().add_child.call_deferred(newPlayer)
 "

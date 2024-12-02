@@ -9,10 +9,16 @@ const JUMP_VELOCITY = -400
 var timer : float
 var timerRunning : bool
 
+var spawnPoint : Vector2
+
+func reset():
+	self.global_position = spawnPoint
+
 func _ready() -> void:
 	timer = 0
 	timerRunning = true
 	Globals.Player = self
+	spawnPoint = self.global_position
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -27,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("left", "right")
 	
 	if direction:
-		velocity.x = direction * (SPEED * 2) if Input.is_action_pressed("sprint") else direction * SPEED # Move in pressed direction and account for sprint
+		velocity.x = direction * SPEED
 		sprite_2d.flip_h = true if direction < 0 else false # Flip the sprite based on direction
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -37,9 +43,9 @@ func _physics_process(delta: float) -> void:
 	if timerRunning:
 		increment_timer(delta)
 	
-func increment_timer(delta):
+func increment_timer(delta : float) -> void:
 	timer += delta
 	timer_label.text = str(snapped(timer, 0.01))
 	
-func stop_timer():
+func stop_timer() -> void:
 	timerRunning = false

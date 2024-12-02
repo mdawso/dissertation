@@ -7,7 +7,7 @@ const PLAYER = preload(\"res://scenes/player.tscn\")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var newPlayer = PLAYER.instantiate()
+	var newPlayer := PLAYER.instantiate()
 	newPlayer.global_position = global_position
 	get_parent().get_parent().add_child.call_deferred(newPlayer)
 "

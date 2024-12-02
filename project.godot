@@ -21,6 +21,10 @@ config/icon="res://assets/ai_player.png"
 Globals="*res://scripts/globals.gd"
 GdServer="*res://scripts/gd_server.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_width=1600
@@ -53,11 +57,6 @@ jump={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194320,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
-sprint={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
 
 [layer_names]
 
@@ -65,7 +64,8 @@ sprint={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Goals"
 2d_physics/layer_4="AI"
+2d_physics/layer_5="Hazards"
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=3
+textures/canvas_textures/default_texture_filter=0
