@@ -22,10 +22,6 @@ class DQN(nn.Module):
         x = self.fc3(x)
         return x
 
-# hyperparameters
-#
-#
-
 TCP_IP = "127.0.0.1"
 TCP_PORT = 9876
 
@@ -48,5 +44,4 @@ data = json.loads(conn.recv(1024).decode())
 numOfObservations = data["numOfObservations"]
 numOfActions = data["numOfActions"]
 
-print("Number of observations: ", numOfObservations)
-print("Number of actions: ", numOfActions)
+model = DQN(numOfObservations, numOfActions)
