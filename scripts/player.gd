@@ -11,7 +11,7 @@ var timerRunning : bool
 
 var spawnPoint : Vector2
 
-func reset():
+func reset() -> void:
 	self.global_position = spawnPoint
 
 func _ready() -> void:

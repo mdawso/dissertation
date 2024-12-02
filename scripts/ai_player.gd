@@ -21,7 +21,7 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 
 var spawnPosition : Vector2
 
-func reset():
+func reset() -> void:
 	self.global_position = spawnPosition
 
 func _ready() -> void:
@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 		if debug_visible_tile_labels.visible:
 			for n in debug_visible_tile_labels.get_children():
 				debug_visible_tile_labels.remove_child(n)
-				n.queue_free() 
+				n.queue_free()
 		
 		if Globals.Map:
 			

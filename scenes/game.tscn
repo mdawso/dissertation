@@ -44,4 +44,4 @@ position = Vector2(-376, -24)
 position = Vector2(360, -24)
 
 [node name="KillPlane" parent="." instance=ExtResource("6_i3a8q")]
-position = Vector2(-64, 200)
+position = Vector2(0, 200)

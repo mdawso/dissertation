@@ -7,6 +7,9 @@ import socket
 import json
 import random
 
+# pytorch setup
+device = T.device("cuda" if T.cuda.is_available() else "cpu")
+
 # model definition
 class DQN(nn.Module):
     
@@ -44,4 +47,12 @@ data = json.loads(conn.recv(1024).decode())
 numOfObservations = data["numOfObservations"]
 numOfActions = data["numOfActions"]
 
-model = DQN(numOfObservations, numOfActions)
+# instantiate the model
+model = DQN(numOfObservations, numOfActions).to(device)
+
+# hyperparameters
+lr = 0.001
+optimizer = optim.Adam(model.parameters(), lr=lr)
+loss = nn.MSELoss()
+
+numIterations = 1000
