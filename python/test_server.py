@@ -5,6 +5,7 @@ TCP_PORT = 9876
 
 # start a server
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # allow the port to be reused immediately after the server is killed
 sock.bind((TCP_IP, TCP_PORT))
 
 # listen for incoming connections
@@ -15,24 +16,26 @@ print("Waiting for connection...")
 
 conn, addr = sock.accept()
 print("Connection established with: ", addr)
-data = conn.recv(1024).decode()
-print("Received data: ", data)
 
-# this is just a test that randomly moves the ai
 while True:
-    
-    #recieve data
-    recievedData = conn.recv(4096).decode()
-    recievedDataDecoded = json.loads(recievedData)
-    
-    distToFinishLine : float = recievedDataDecoded["distToFinishLine"]
-    finishLineVisible : bool = recievedDataDecoded["finishLineVisible"]
-    visibleTiles : dict = recievedDataDecoded["visibleTiles"]
-    
-    #send data
-    data = {"direction": random.choice(["none", "left", "right"]), "jump": random.choice([True, False])}
-    jsonData = json.dumps(data) + "|"
-    conn.send(jsonData.encode())
-    print("Sent data: ", data)
 
+    # send a ready message to signal the python script is ready
+    conn.send("ready".encode())
+
+    # first we wait for godot to send an observation
+    observation = conn.recv(4096)
+    observation = json.loads(observation.decode())
+    print("Received observation: ", observation)
+
+    # then we send an action
+    action = random.choice([0, 1, 2])
+    print("Sending action: ", action)
+    conn.send(action.to_bytes(1, byteorder='big'))
+
+    # finally we wait for the reward
+    reward = conn.recv(8)
+    reward = int.from_bytes(reward, byteorder='big')
+    print("Received reward: ", reward)
+
+# close the connection
 conn.close()
