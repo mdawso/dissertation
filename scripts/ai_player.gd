@@ -33,7 +33,7 @@ func _ready() -> void:
 	if peer.get_status() == 2: # 2 is status connected
 		print("%s Connected" % [self])
 		var setupData : Dictionary = {"numOfObservations":numOfObservations, "numOfActions": 5}
-		peer.put_data(JSON.stringify(setupData).to_ascii_buffer())
+		peer.put_data(JSON.stringify(setupData).to_utf8_buffer())
 
 func _physics_process(delta: float) -> void:
 	
@@ -96,14 +96,21 @@ func _physics_process(delta: float) -> void:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-		var gatheredDataDict : Dictionary = {"visibleTiles": visibleTiles, "distToFinishLine": distToFinishLine, "finishLineVisible": finishLineVisible}
+		var gatheredDataDict : Dictionary = {"visibleTiles": visibleTiles}
 		dataToSend = JSON.stringify(gatheredDataDict)
 	
 	peer.poll()
 	
 	if peer.get_status() == 2:
 		
+		var ack = peer.get_string(3)
+		print(ack)
+		
+		peer.poll()
+		
 		peer.put_data(dataToSend.to_ascii_buffer())
+		
+		peer.poll()
 		
 		# recieve data from python and process it
 		

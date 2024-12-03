@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_qp51r"]
 script/source = "extends Node2D
 
-const AI_PLAYER = preload(\"res://scenes/ai_player.tscn\")
+const AI_PLAYER = preload(\"res://scenes/ai_player_v2.tscn\")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
