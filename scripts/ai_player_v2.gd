@@ -80,11 +80,11 @@ func action(delta : float, data : int) -> void:
 	move_and_slide()
 	
 # reward to reward the model
-func reward() -> int:
+func reward() -> float:
 	
-	var distToFinishLine : float = INF
+	var distToFinishLine : float = 1000
 	var finishLineVisible : bool = false
-	var r : int = 20
+	var r : float = 0
 	
 	if Globals.FinishLine:
 			
@@ -100,7 +100,8 @@ func reward() -> int:
 			if debug_finish_line_vector_length_label.visible:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
-				
+		
+	r = distToFinishLine * 0.5 if not finishLineVisible else distToFinishLine
 	return r
 
 func reset() -> void:
@@ -121,7 +122,7 @@ func _physics_process(delta: float) -> void:
 		
 		# wait for a message saying the python script is ready
 		peer.poll()
-		var ready = peer.get_string(5)
+		var _isready : String = peer.get_string(5)
 		#print(ready)
 		
 		# first we make an observation and send to python
@@ -141,7 +142,7 @@ func _physics_process(delta: float) -> void:
 		
 		# finally we send back a reward to the model
 		
-		var model_reward : int = reward()
-		peer.put_u8(model_reward)
+		var model_reward : float = reward()
+		peer.put_float(model_reward)
 		peer.poll()
 		

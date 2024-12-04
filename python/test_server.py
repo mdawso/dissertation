@@ -1,4 +1,4 @@
-import socket, time, random, json
+import socket, time, random, json, struct
 
 TCP_IP = "127.0.0.1"
 TCP_PORT = 9876
@@ -33,8 +33,8 @@ while True:
     conn.send(action.to_bytes(1, byteorder='big'))
 
     # finally we wait for the reward
-    reward = conn.recv(8)
-    reward = int.from_bytes(reward, byteorder='big')
+    reward = conn.recv(32)
+    reward = struct.unpack('f', reward)[0]
     print("Received reward: ", reward)
 
 # close the connection
