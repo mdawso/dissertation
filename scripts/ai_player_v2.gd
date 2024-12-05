@@ -21,6 +21,8 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 
 var spawnPosition : Vector2
 
+var previousDistToFinishLine : float = 1000
+
 # observe to return dictionary of all the tiles the player can see
 func observe() -> Dictionary:
 	
@@ -82,6 +84,7 @@ func action(delta : float, data : int) -> void:
 # reward to reward the model
 func reward() -> float:
 	
+	var hasGotCloser : bool = false
 	var distToFinishLine : float = 1000
 	var finishLineVisible : bool = false
 	var r : float = 0
@@ -93,6 +96,8 @@ func reward() -> float:
 			distToFinishLine = vecToFinishLine.length()
 			finishLineVisible = not finish_line_raycast.is_colliding()
 			
+			hasGotCloser = true if distToFinishLine < previousDistToFinishLine else false
+			
 			if debug_finish_line_vector.visible:
 				debug_finish_line_vector.points[1] = vecToFinishLine
 				debug_finish_line_vector.default_color = Color.GREEN if finishLineVisible else Color.RED
@@ -101,7 +106,7 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-	r = distToFinishLine * 0.5 if not finishLineVisible else distToFinishLine
+	r = 1 if hasGotCloser else 0
 	return r
 
 func reset() -> void:
