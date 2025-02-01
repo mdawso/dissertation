@@ -35,3 +35,10 @@ func _physics_process(delta: float) -> void:
 
 however i noticed that the reward will actually have to be send at the start of the frame, rather than the end
 this is because the reward from the any given frame cannot be gathered until the game progresses to the next frame
+
+-> start frame
+-> gather reward
+-> send to model
+-> gather oberservation
+-> send to model
+-> next frame
