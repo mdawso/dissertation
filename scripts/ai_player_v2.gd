@@ -47,10 +47,11 @@ func observe() -> Dictionary:
 				
 				if cellTileData:
 					if cellTileData.get_collision_polygons_count(0) > 0:
-						var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
-						visibleTiles[coordinates] = lenOfVecToTile
+						#var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
+						#visibleTiles[coordinates] = lenOfVecToTile
+						visibleTiles[coordinates] = 1
 				else:
-					visibleTiles[coordinates] = false
+					visibleTiles[coordinates] = 0
 					
 				if debug_visible_tile_labels.visible:
 					var newLabel : Label = Label.new()
@@ -97,6 +98,7 @@ func reward() -> float:
 			finishLineVisible = not finish_line_raycast.is_colliding()
 			
 			hasGotCloser = true if distToFinishLine < previousDistToFinishLine else false
+			previousDistToFinishLine = distToFinishLine
 			
 			if debug_finish_line_vector.visible:
 				debug_finish_line_vector.points[1] = vecToFinishLine
@@ -106,7 +108,7 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-	r = 1 if hasGotCloser else 0
+	r = 1 if hasGotCloser else -1
 	return r
 
 func reset() -> void:
@@ -115,6 +117,7 @@ func reset() -> void:
 func _ready() -> void:
 	Globals.AIPlayer = self
 	spawnPosition = self.global_position
+	print("%s observations" % [numOfObservations])
 	peer = StreamPeerTCP.new()
 	peer.connect_to_host(TCP_IP,TCP_PORT)
 	peer.poll()
@@ -125,12 +128,21 @@ func _physics_process(delta: float) -> void:
 	
 	if peer.get_status() == peer.STATUS_CONNECTED:
 		
-		# wait for a message saying the python script is ready
+		# first we send the reward and from the previous frame and the current state
+		var model_reward : float = reward()
+		peer.put_float(model_reward)
+		peer.poll()
+		var next_state : Dictionary = observe()
+		var next_state_encoded : PackedByteArray = JSON.stringify(next_state).to_utf8_buffer()
+		peer.put_data(next_state_encoded)
+		peer.poll()
+		
+		# wait for a message saying the python script is ready to start a new loop
 		peer.poll()
 		var _isready : String = peer.get_string(5)
 		#print(ready)
 		
-		# first we make an observation and send to python
+		# we make an observation and send to python
 		var visibleTiles : Dictionary = observe()
 		var visibleTilesEncoded : PackedByteArray = JSON.stringify(visibleTiles).to_utf8_buffer()
 		peer.put_data(visibleTilesEncoded)
@@ -144,10 +156,4 @@ func _physics_process(delta: float) -> void:
 		peer.poll()
 		var model_action : int = peer.get_u8()
 		action(delta, model_action)
-		
-		# finally we send back a reward to the model
-		
-		var model_reward : float = reward()
-		peer.put_float(model_reward)
-		peer.poll()
 		

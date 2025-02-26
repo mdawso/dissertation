@@ -23,9 +23,11 @@ collision_mask = 2
 script = SubResource("GDScript_f388f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_ca68p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
 texture = ExtResource("1_o6mnc")
 
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
