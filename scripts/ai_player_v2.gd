@@ -1,7 +1,3 @@
-# TODO player needs to be able to see the finish line
-# TODO convert finish line to custom tile
-# TODO add special reward when the player is touching the finish line
-
 extends CharacterBody2D
 
 var peer : StreamPeerTCP
@@ -22,7 +18,6 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_finish_line_vector_length_label: Label = %DEBUG_FinishLineVectorLengthLabel
 @onready var debug_state_label: Label = %DEBUG_StateLabel
 @onready var debug_visible_tile_labels: Node2D = %DEBUG_VisibleTileLabels
-@onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
 
 var spawnPosition : Vector2
 
@@ -96,10 +91,6 @@ func reward() -> float:
 	var r : float = 0
 	
 	if Globals.FinishLine:
-		
-		print(collision_shape_2d.shape.get_rect())
-		print(Globals.FinishLine.collision_shape_2d.shape.get_rect())
-		if not collision_shape_2d.shape.get_rect().intersects(Globals.FinishLine.collision_shape_2d.shape.get_rect()):
 			
 			var vecToFinishLine : Vector2 = Globals.FinishLine.global_position - self.global_position
 			finish_line_raycast.set_target_position(vecToFinishLine)

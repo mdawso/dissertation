@@ -41,7 +41,7 @@ position = Vector2(-376, -24)
 [node name="AISpawn" parent="Spawns" instance=ExtResource("4_8u3dy")]
 
 [node name="FinishLine" parent="." instance=ExtResource("3_2lyf8")]
-position = Vector2(368, 0)
+position = Vector2(360, -24)
 
 [node name="KillPlane" parent="." instance=ExtResource("6_i3a8q")]
 position = Vector2(0, 200)
