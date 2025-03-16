@@ -50,3 +50,8 @@ offset_bottom = 23.0
 grow_horizontal = 2
 size_flags_horizontal = 0
 text = "state label"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0

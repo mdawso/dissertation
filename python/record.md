@@ -42,3 +42,6 @@ this is because the reward from the any given frame cannot be gathered until the
 -> gather oberservation
 -> send to model
 -> next frame
+
+I have decided to use torch-directml to handle talking to the gpu, I have done this so I can use my new 
+AMD graphics card which does not support pytorch natively. DirectML uses directx12 which it does support.

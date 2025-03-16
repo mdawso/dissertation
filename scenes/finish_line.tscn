@@ -5,9 +5,11 @@
 [sub_resource type="GDScript" id="GDScript_f388f"]
 script/source = "extends Area2D
 
+@onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
+
 func _ready() -> void:
 	Globals.FinishLine = self
-
+	
 func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	
 	if body.has_method(\"stop_timer\"):
@@ -23,11 +25,12 @@ collision_mask = 2
 script = SubResource("GDScript_f388f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -24)
+unique_name_in_owner = true
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_ca68p")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(0, -16)
 texture = ExtResource("1_o6mnc")
 
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

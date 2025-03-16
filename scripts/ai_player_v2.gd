@@ -51,6 +51,8 @@ func observe() -> Dictionary:
 						#visibleTiles[coordinates] = lenOfVecToTile
 						visibleTiles[coordinates] = 1
 				else:
+					# see the finish line
+					var point = Globals.Map.map_to_local(coordinates)
 					visibleTiles[coordinates] = 0
 					
 				if debug_visible_tile_labels.visible:
@@ -58,7 +60,7 @@ func observe() -> Dictionary:
 					newLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 					newLabel.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 					newLabel.position = Globals.Map.map_to_local(coordinates) + Vector2(-5,-12.5) # this is added to line the numbers up to the centres of the tiles
-					newLabel.text = str(1 if visibleTiles[coordinates] else 0)
+					newLabel.text = str(visibleTiles[coordinates])
 					debug_visible_tile_labels.add_child(newLabel)
 					
 	return visibleTiles
