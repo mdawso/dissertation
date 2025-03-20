@@ -7,6 +7,8 @@ script/source = "extends Area2D
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method(\"reset\"):
 		body.reset()
+	if body.has_method(\"apply_death_penalty\"):
+		body.apply_death_penalty()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upmf2"]

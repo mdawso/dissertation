@@ -10,6 +10,9 @@ const JUMP_VELOCITY = -400.0
 const SIGHT_RANGE : int = 3
 var numOfObservations : int = (2*SIGHT_RANGE+1)**2
 
+var deathPenalty = false
+var winReward = false
+
 const observing : bool = true # bool to toggle all data gathering for model, debug
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
@@ -22,6 +25,12 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 var spawnPosition : Vector2
 
 var previousDistToFinishLine : float = 1000
+
+func apply_death_penalty():
+	deathPenalty = true
+	
+func apply_win_reward():
+	winReward = true
 
 # observe to return dictionary of all the tiles the player can see
 func observe() -> Dictionary:
@@ -53,7 +62,8 @@ func observe() -> Dictionary:
 				else:
 					# see the finish line
 					var point = Globals.Map.map_to_local(coordinates)
-					visibleTiles[coordinates] = 0
+					if Globals.isWithinFinishLineGlobalBounds(point): visibleTiles[coordinates] = 2
+					else: visibleTiles[coordinates] = 0
 					
 				if debug_visible_tile_labels.visible:
 					var newLabel : Label = Label.new()
@@ -110,8 +120,10 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-	r = 1 if hasGotCloser else -1
-	return r
+	if deathPenalty == true: return -10
+	elif winReward == true: return 10
+	elif hasGotCloser: return 1
+	else: return -1
 
 func reset() -> void:
 	self.global_position = spawnPosition
@@ -143,6 +155,9 @@ func _physics_process(delta: float) -> void:
 		peer.poll()
 		var _isready : String = peer.get_string(5)
 		#print(ready)
+		
+		deathPenalty = false
+		winReward = false
 		
 		# we make an observation and send to python
 		var visibleTiles : Dictionary = observe()
