@@ -59,10 +59,9 @@ func observe() -> Dictionary:
 						#var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
 						#visibleTiles[coordinates] = lenOfVecToTile
 						visibleTiles[coordinates] = 1
-				else:
-					# see the finish line
+				else: 
 					var point = Globals.Map.map_to_local(coordinates)
-					if Globals.isWithinFinishLineGlobalBounds(point): visibleTiles[coordinates] = 2
+					if Globals.isWithinFinishLineBounds(point): visibleTiles[coordinates] = 2
 					else: visibleTiles[coordinates] = 0
 					
 				if debug_visible_tile_labels.visible:
@@ -121,7 +120,7 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
 	if deathPenalty == true: return -10
-	elif winReward == true: return 10
+	elif winReward == true: return 30
 	elif hasGotCloser: return 1
 	else: return -1
 

@@ -23,6 +23,7 @@ target_position = Vector2(50, -50)
 
 [node name="DEBUG_FinishLineVector" type="Line2D" parent="FinishLineRaycast"]
 unique_name_in_owner = true
+visible = false
 points = PackedVector2Array(0, 0, 0, 0)
 width = 2.0
 
@@ -50,8 +51,3 @@ offset_bottom = 23.0
 grow_horizontal = 2
 size_flags_horizontal = 0
 text = "state label"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
