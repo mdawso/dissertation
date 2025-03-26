@@ -37,6 +37,8 @@ func observe() -> Dictionary:
 	
 	# gather data
 	
+	#print("observe start")
+	
 	var visibleTiles : Dictionary = {}
 	
 	if debug_visible_tile_labels.visible:
@@ -72,6 +74,8 @@ func observe() -> Dictionary:
 					newLabel.text = str(visibleTiles[coordinates])
 					debug_visible_tile_labels.add_child(newLabel)
 					
+	#print("observe end")
+	
 	return visibleTiles
 
 # action to act on data send back by model
