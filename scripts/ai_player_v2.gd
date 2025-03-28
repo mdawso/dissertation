@@ -54,18 +54,23 @@ func observe() -> Dictionary:
 			for y in range(playerPosOnMap.y - SIGHT_RANGE, playerPosOnMap.y + SIGHT_RANGE + 1):
 				
 				var coordinates : Vector2 = Vector2i(x,y)
-				var cellTileData : TileData = Globals.Map.get_cell_tile_data(coordinates)
 				
-				if cellTileData:
-					if cellTileData.get_collision_polygons_count(0) > 0:
-						#var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
-						#visibleTiles[coordinates] = lenOfVecToTile
-						visibleTiles[coordinates] = 1
-				else: 
-					var point = Globals.Map.map_to_local(coordinates)
-					if Globals.isWithinFinishLineBounds(point): visibleTiles[coordinates] = 2
-					else: visibleTiles[coordinates] = 0
+				if coordinates == playerPosOnMap:
+					# centre of the observation matrix = player position
+					visibleTiles[coordinates] = 3
+				else:
+					var cellTileData : TileData = Globals.Map.get_cell_tile_data(coordinates)
 					
+					if cellTileData:
+						if cellTileData.get_collision_polygons_count(0) > 0:
+							#var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
+							#visibleTiles[coordinates] = lenOfVecToTile
+							visibleTiles[coordinates] = 1
+					else: 
+						var point = Globals.Map.map_to_local(coordinates)
+						if Globals.isWithinFinishLineBounds(point): visibleTiles[coordinates] = 2
+						else: visibleTiles[coordinates] = 0
+						
 				if debug_visible_tile_labels.visible:
 					var newLabel : Label = Label.new()
 					newLabel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
