@@ -10,10 +10,13 @@ const JUMP_VELOCITY = -400.0
 const SIGHT_RANGE : int = 3
 var numOfObservations : int = (2*SIGHT_RANGE+1)**2
 
+var runTimer : float = 0
+
 var deathPenalty = false
 var winReward = false
 
 const observing : bool = true # bool to toggle all data gathering for model, debug
+
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
 
@@ -21,11 +24,13 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_finish_line_vector_length_label: Label = %DEBUG_FinishLineVectorLengthLabel
 @onready var debug_state_label: Label = %DEBUG_StateLabel
 @onready var debug_visible_tile_labels: Node2D = %DEBUG_VisibleTileLabels
+@onready var debug_timer_label: Label = %DEBUG_TimerLabel
 
 var spawnPosition : Vector2
 
 var previousDistToFinishLine : float = 1000
 
+# these two functions are a dumb workaround
 func apply_death_penalty():
 	deathPenalty = true
 	
@@ -135,6 +140,7 @@ func reward() -> float:
 
 func reset() -> void:
 	self.global_position = spawnPosition
+	runTimer = 0
 
 func _ready() -> void:
 	Globals.AIPlayer = self
@@ -182,3 +188,5 @@ func _physics_process(delta: float) -> void:
 		var model_action : int = peer.get_u8()
 		action(delta, model_action)
 		
+		runTimer += delta
+		debug_timer_label.text = str(snapped(runTimer, 0.01))

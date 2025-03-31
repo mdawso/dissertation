@@ -40,6 +40,14 @@ top_level = true
 
 [node name="DEBUG_CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="DEBUG_TimerLabel" type="Label" parent="DEBUG_CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 779.0
+offset_top = 26.0
+offset_right = 822.0
+offset_bottom = 49.0
+text = "timer"
+
 [node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer"]
 unique_name_in_owner = true
 anchors_preset = 5
