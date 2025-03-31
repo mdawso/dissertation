@@ -1,14 +1,15 @@
-[gd_scene load_steps=8 format=4 uid="uid://b365pmg7spbq"]
+[gd_scene load_steps=9 format=4 uid="uid://bcdheifykxcfi"]
 
-[ext_resource type="Texture2D" uid="uid://dgrw0o8oqttqk" path="res://assets/tile.png" id="1_0aw61"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_rqp0u"]
-[ext_resource type="PackedScene" uid="uid://bg5bu5lp34p1r" path="res://scenes/finish_line.tscn" id="3_2lyf8"]
-[ext_resource type="PackedScene" uid="uid://baklvaprgbp6v" path="res://scenes/ai_spawn.tscn" id="4_8u3dy"]
-[ext_resource type="PackedScene" uid="uid://brbdt22mxhc63" path="res://scenes/kill_plane.tscn" id="6_i3a8q"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_ko1x2"]
+[ext_resource type="Texture2D" uid="uid://dgrw0o8oqttqk" path="res://assets/tile.png" id="2_vgkp1"]
+[ext_resource type="PackedScene" uid="uid://i5wyof3qs4x2" path="res://scenes/player_spawn.tscn" id="3_4fgcx"]
+[ext_resource type="PackedScene" uid="uid://baklvaprgbp6v" path="res://scenes/ai_spawn.tscn" id="4_bfi85"]
+[ext_resource type="PackedScene" uid="uid://bg5bu5lp34p1r" path="res://scenes/finish_line.tscn" id="5_ojsa1"]
+[ext_resource type="PackedScene" uid="uid://brbdt22mxhc63" path="res://scenes/kill_plane.tscn" id="6_1nxxb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lmkl2"]
 resource_name = "floor"
-texture = ExtResource("1_0aw61")
+texture = ExtResource("2_vgkp1")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
@@ -17,8 +18,8 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 2
 sources/0 = SubResource("TileSetAtlasSource_lmkl2")
 
-[node name="Game" type="Node2D"]
-script = ExtResource("1_rqp0u")
+[node name="PlayerGame" type="Node2D"]
+script = ExtResource("1_ko1x2")
 
 [node name="World" type="Node2D" parent="."]
 
@@ -35,10 +36,12 @@ zoom = Vector2(2, 2)
 [node name="Spawns" type="Node2D" parent="."]
 position = Vector2(-376, -24)
 
-[node name="AISpawn" parent="Spawns" instance=ExtResource("4_8u3dy")]
+[node name="PlayerSpawn" parent="Spawns" instance=ExtResource("3_4fgcx")]
 
-[node name="FinishLine" parent="." instance=ExtResource("3_2lyf8")]
+[node name="AISpawn" parent="Spawns" instance=ExtResource("4_bfi85")]
+
+[node name="FinishLine" parent="." instance=ExtResource("5_ojsa1")]
 position = Vector2(304, 0)
 
-[node name="KillPlane" parent="." instance=ExtResource("6_i3a8q")]
+[node name="KillPlane" parent="." instance=ExtResource("6_1nxxb")]
 position = Vector2(0, 200)

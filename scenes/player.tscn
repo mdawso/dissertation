@@ -1,15 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwhx75fvnqrxl"]
+[gd_scene load_steps=5 format=3 uid="uid://cwhx75fvnqrxl"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_w62d4"]
 [ext_resource type="Texture2D" uid="uid://c60xqrvv6xhyg" path="res://assets/player.png" id="2_s0t8o"]
-[ext_resource type="FontFile" uid="uid://blmbrcsa4r3ox" path="res://assets/fonts/PressStart2P-Regular.ttf" id="3_f3gsh"]
+[ext_resource type="LabelSettings" uid="uid://m78p7voel3lj" path="res://scenes/default_label_settings.tres" id="3_n5uid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sa7vg"]
 size = Vector2(16, 16)
-
-[sub_resource type="LabelSettings" id="LabelSettings_4ybp4"]
-font = ExtResource("3_f3gsh")
-font_size = 32
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -32,5 +28,5 @@ offset_top = 8.0
 offset_right = 88.0
 offset_bottom = 24.0
 text = "Timer"
-label_settings = SubResource("LabelSettings_4ybp4")
+label_settings = ExtResource("3_n5uid")
 vertical_alignment = 1

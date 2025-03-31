@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmh3ltyxptck"]
+[gd_scene load_steps=6 format=3 uid="uid://dmh3ltyxptck"]
 
 [ext_resource type="Theme" uid="uid://11aga3604cn0" path="res://scenes/ui_theme.tres" id="1_ye4hc"]
 
@@ -10,6 +10,13 @@ script/source = "extends Button
 
 func _on_pressed() -> void:
 	get_tree().change_scene_to_file(\"res://scenes/game.tscn\")
+"
+
+[sub_resource type="GDScript" id="GDScript_it0ki"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/playergame.tscn\")
 "
 
 [sub_resource type="GDScript" id="GDScript_5k0wr"]
@@ -58,11 +65,18 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
+[node name="EvalButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
 layout_mode = 2
 theme = ExtResource("1_ye4hc")
-text = "Play"
+text = "Training/Eval Mode
+"
 script = SubResource("GDScript_yv03p")
+
+[node name="PlayerButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "Player Mode"
+script = SubResource("GDScript_it0ki")
 
 [node name="QuitButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
 layout_mode = 2
@@ -70,5 +84,6 @@ theme = ExtResource("1_ye4hc")
 text = "Quit"
 script = SubResource("GDScript_5k0wr")
 
-[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/EvalButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/EvalButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayerButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayerButton" method="_on_pressed"]
 [connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" method="_on_pressed"]

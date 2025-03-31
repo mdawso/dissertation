@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1iblasl6sjrv"]
+[gd_scene load_steps=5 format=3 uid="uid://d1iblasl6sjrv"]
 
 [ext_resource type="Script" path="res://scripts/ai_player_v2.gd" id="1_hnukh"]
 [ext_resource type="Texture2D" uid="uid://cxejwu8sns1h2" path="res://assets/ai_player.png" id="2_n166e"]
+[ext_resource type="LabelSettings" uid="uid://m78p7voel3lj" path="res://scenes/default_label_settings.tres" id="3_urhbb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dr2ca"]
 size = Vector2(16, 16)
@@ -40,30 +41,31 @@ top_level = true
 
 [node name="DEBUG_CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="DEBUG_TimerLabel" type="Label" parent="DEBUG_CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DEBUG_CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DEBUG_TimerLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
-offset_left = 779.0
-offset_top = 26.0
-offset_right = 822.0
-offset_bottom = 49.0
+layout_mode = 2
 text = "timer"
+label_settings = ExtResource("3_urhbb")
 
-[node name="DEBUG_TimeRewardMultiplierLabel" type="Label" parent="DEBUG_CanvasLayer"]
+[node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
-offset_left = 756.0
-offset_top = 53.0
-offset_right = 845.0
-offset_bottom = 76.0
-text = "WinReward"
-
-[node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer"]
-unique_name_in_owner = true
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -40.5
-offset_right = 40.5
-offset_bottom = 23.0
-grow_horizontal = 2
+layout_mode = 2
 size_flags_horizontal = 0
 text = "state label"
+label_settings = ExtResource("3_urhbb")
+
+[node name="DEBUG_TimeRewardMultiplierLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "WinReward"
+label_settings = ExtResource("3_urhbb")
+
+[node name="DEBUG_StuckTimeLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "stucktime"
+label_settings = ExtResource("3_urhbb")

@@ -7,7 +7,7 @@ const TCP_PORT : int = 9876
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-const SIGHT_RANGE : int = 5
+const SIGHT_RANGE : int = 3
 var numOfObservations : int = (2*SIGHT_RANGE+1)**2
 
 var runTimer : float = 0
@@ -17,6 +17,11 @@ var winReward : bool= false
 
 var prevTime : float = 1.0
 var timeRewardMultiplier : float = 1.0
+
+var prevHDist : float = 1000.0
+var stuck : bool = false
+var stuckTime : float = 0.0
+var maxStuckTime : float = 2.0
 
 const observing : bool = true # bool to toggle all data gathering for model, debug
 
@@ -29,19 +34,20 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_visible_tile_labels: Node2D = %DEBUG_VisibleTileLabels
 @onready var debug_timer_label: Label = %DEBUG_TimerLabel
 @onready var debug_time_reward_multiplier_label: Label = %DEBUG_TimeRewardMultiplierLabel
+@onready var debug_stuck_time_label: Label = %DEBUG_StuckTimeLabel
 
 var spawnPosition : Vector2
 
 var previousDistToFinishLine : float = 1000
 
 # these functions are a dumb workaround
-func apply_death_penalty():
+func apply_death_penalty() -> void:
 	deathPenalty = true
 	
-func apply_win_reward():
+func apply_win_reward() -> void:
 	winReward = true
 
-func eval_time_reward(time : float):
+func eval_time_reward(time : float) -> void:
 	if time < prevTime:
 		timeRewardMultiplier = 1.2
 	else:
@@ -50,6 +56,23 @@ func eval_time_reward(time : float):
 	# TODO put stuff here
 	# this is arbitrary
 	# actually maybe good idk
+
+func eval_stuck(delta : float) -> void:
+	if stuck: stuckTime += delta
+	else: stuckTime = 0
+		
+	if stuckTime > maxStuckTime:
+		stuck_reset()
+	
+func stuck_reset() -> void:
+	stuckTime = 0
+	apply_death_penalty()
+	reset()
+	
+func update_labels() -> void:
+	debug_timer_label.text = str(snapped(runTimer, 0.01))
+	debug_time_reward_multiplier_label.text = "prev mult: " + str(timeRewardMultiplier)
+	debug_stuck_time_label.text = "stuck time: " + str(snapped(stuckTime, 0.01))
 
 # observe to return dictionary of all the tiles the player can see
 func observe() -> Dictionary:
@@ -86,7 +109,7 @@ func observe() -> Dictionary:
 							#visibleTiles[coordinates] = lenOfVecToTile
 							visibleTiles[coordinates] = 1
 					else: 
-						var point = Globals.Map.map_to_local(coordinates)
+						var point : Vector2 = Globals.Map.map_to_local(coordinates)
 						if Globals.isWithinFinishLineBounds(point): visibleTiles[coordinates] = 2
 						else: visibleTiles[coordinates] = 0
 						
@@ -127,7 +150,7 @@ func reward() -> float:
 	var hasGotCloser : bool = false
 	var distToFinishLine : float = 1000
 	var finishLineVisible : bool = false
-	var r : float = 0
+	var _r : float = 0
 	
 	if Globals.FinishLine:
 			
@@ -135,6 +158,10 @@ func reward() -> float:
 			finish_line_raycast.set_target_position(vecToFinishLine)
 			distToFinishLine = vecToFinishLine.length()
 			finishLineVisible = not finish_line_raycast.is_colliding()
+			
+			# stuck check
+			stuck = true if vecToFinishLine.x >= prevHDist else false
+			prevHDist = vecToFinishLine.x
 			
 			hasGotCloser = true if distToFinishLine < previousDistToFinishLine else false
 			previousDistToFinishLine = distToFinishLine
@@ -147,8 +174,8 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-	if deathPenalty == true: return -30
-	elif winReward == true: return 30 * timeRewardMultiplier
+	if deathPenalty == true: return -300
+	elif winReward == true: return 600 * timeRewardMultiplier
 	elif hasGotCloser: return 1
 	else: return -1
 
@@ -204,5 +231,7 @@ func _physics_process(delta: float) -> void:
 		action(delta, model_action)
 		
 		runTimer += delta
-		debug_timer_label.text = str(snapped(runTimer, 0.01))
-		debug_time_reward_multiplier_label.text = str(timeRewardMultiplier)
+		
+		eval_stuck(delta)
+		
+		update_labels()
