@@ -7,13 +7,16 @@ const TCP_PORT : int = 9876
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
-const SIGHT_RANGE : int = 3
+const SIGHT_RANGE : int = 5
 var numOfObservations : int = (2*SIGHT_RANGE+1)**2
 
 var runTimer : float = 0
 
-var deathPenalty = false
-var winReward = false
+var deathPenalty : bool = false
+var winReward : bool= false
+
+var prevTime : float = 1.0
+var timeRewardMultiplier : float = 1.0
 
 const observing : bool = true # bool to toggle all data gathering for model, debug
 
@@ -25,17 +28,28 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_state_label: Label = %DEBUG_StateLabel
 @onready var debug_visible_tile_labels: Node2D = %DEBUG_VisibleTileLabels
 @onready var debug_timer_label: Label = %DEBUG_TimerLabel
+@onready var debug_time_reward_multiplier_label: Label = %DEBUG_TimeRewardMultiplierLabel
 
 var spawnPosition : Vector2
 
 var previousDistToFinishLine : float = 1000
 
-# these two functions are a dumb workaround
+# these functions are a dumb workaround
 func apply_death_penalty():
 	deathPenalty = true
 	
 func apply_win_reward():
 	winReward = true
+
+func eval_time_reward(time : float):
+	if time < prevTime:
+		timeRewardMultiplier = 1.2
+	else:
+		timeRewardMultiplier = 0.8
+	prevTime = time
+	# TODO put stuff here
+	# this is arbitrary
+	# actually maybe good idk
 
 # observe to return dictionary of all the tiles the player can see
 func observe() -> Dictionary:
@@ -133,13 +147,14 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
 		
-	if deathPenalty == true: return -10
-	elif winReward == true: return 30
+	if deathPenalty == true: return -30
+	elif winReward == true: return 30 * timeRewardMultiplier
 	elif hasGotCloser: return 1
 	else: return -1
 
 func reset() -> void:
 	self.global_position = spawnPosition
+	eval_time_reward(runTimer)
 	runTimer = 0
 
 func _ready() -> void:
@@ -190,3 +205,4 @@ func _physics_process(delta: float) -> void:
 		
 		runTimer += delta
 		debug_timer_label.text = str(snapped(runTimer, 0.01))
+		debug_time_reward_multiplier_label.text = str(timeRewardMultiplier)
