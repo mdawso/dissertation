@@ -15,7 +15,7 @@ var runTimer : float = 0
 var deathPenalty : bool = false
 var winReward : bool= false
 
-var prevTime : float = 1.0
+var prevTime : float = 1000.0
 var timeRewardMultiplier : float = 1.0
 
 var prevHDist : float = 1000.0
@@ -35,6 +35,7 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_timer_label: Label = %DEBUG_TimerLabel
 @onready var debug_time_reward_multiplier_label: Label = %DEBUG_TimeRewardMultiplierLabel
 @onready var debug_stuck_time_label: Label = %DEBUG_StuckTimeLabel
+@onready var debug_prev_time_label: Label = %DEBUG_PrevTimeLabel
 
 var spawnPosition : Vector2
 
@@ -48,14 +49,15 @@ func apply_win_reward() -> void:
 	winReward = true
 
 func eval_time_reward(time : float) -> void:
-	if time < prevTime:
-		timeRewardMultiplier = 1.2
-	else:
-		timeRewardMultiplier = 0.8
-	prevTime = time
-	# TODO put stuff here
-	# this is arbitrary
-	# actually maybe good idk
+	if not stuck:
+		if time < prevTime:
+			timeRewardMultiplier = 1.2
+		else:
+			timeRewardMultiplier = 0.8
+		prevTime = time
+		# TODO put stuff here
+		# this is arbitrary
+		# actually maybe good idk
 
 func eval_stuck(delta : float) -> void:
 	if stuck: stuckTime += delta
@@ -70,7 +72,8 @@ func stuck_reset() -> void:
 	reset()
 	
 func update_labels() -> void:
-	debug_timer_label.text = str(snapped(runTimer, 0.01))
+	debug_timer_label.text = "current time: " + str(snapped(runTimer, 0.01))
+	debug_prev_time_label.text = "prev time: " + str(snapped(prevTime, 0.01))
 	debug_time_reward_multiplier_label.text = "prev mult: " + str(timeRewardMultiplier)
 	debug_stuck_time_label.text = "stuck time: " + str(snapped(stuckTime, 0.01))
 
