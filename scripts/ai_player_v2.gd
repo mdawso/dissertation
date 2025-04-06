@@ -94,6 +94,7 @@ func observe() -> Dictionary:
 	if Globals.Map:
 		
 		var playerPosOnMap : Vector2 = Globals.Map.local_to_map(position)
+		#print(playerPosOnMap)
 		
 		for x in range(playerPosOnMap.x - SIGHT_RANGE, playerPosOnMap.x + SIGHT_RANGE + 1): # +1 because the max is exclusive
 			for y in range(playerPosOnMap.y - SIGHT_RANGE, playerPosOnMap.y + SIGHT_RANGE + 1):
@@ -102,7 +103,7 @@ func observe() -> Dictionary:
 				
 				if coordinates == playerPosOnMap:
 					# centre of the observation matrix = player position
-					visibleTiles[coordinates] = 3
+					visibleTiles[coordinates] = 1
 				else:
 					var cellTileData : TileData = Globals.Map.get_cell_tile_data(coordinates)
 					
@@ -110,7 +111,7 @@ func observe() -> Dictionary:
 						if cellTileData.get_collision_polygons_count(0) > 0:
 							#var lenOfVecToTile : float = (Globals.Map.map_to_local(coordinates) - self.position).length()
 							#visibleTiles[coordinates] = lenOfVecToTile
-							visibleTiles[coordinates] = 1
+							visibleTiles[coordinates] = 3
 					else: 
 						var point : Vector2 = Globals.Map.map_to_local(coordinates)
 						if Globals.isWithinFinishLineBounds(point): visibleTiles[coordinates] = 2
@@ -129,6 +130,10 @@ func observe() -> Dictionary:
 	return visibleTiles
 
 # action to act on data send back by model
+# 0 = move left
+# 1 = move right
+# 2 = jump
+# 3 = do not move
 func action(delta : float, data : int) -> void:
 	
 	# apply gravity
@@ -186,6 +191,7 @@ func reset() -> void:
 	self.global_position = spawnPosition
 	eval_time_reward(runTimer)
 	runTimer = 0
+	if MapSettings.rand and Globals.Map.has_method("randomise_map"): Globals.Map.randomise_map()
 
 func _ready() -> void:
 	Globals.AIPlayer = self

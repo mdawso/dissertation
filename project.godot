@@ -19,6 +19,7 @@ config/icon="res://assets/ai_player.png"
 [autoload]
 
 Globals="*res://scripts/globals.gd"
+MapSettings="*res://scripts/map_settings.gd"
 GdServer="*res://scripts/gd_server.gd"
 
 [debug]
