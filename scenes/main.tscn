@@ -124,6 +124,7 @@ layout_mode = 2
 [node name="MapRandButton" type="CheckButton" parent="MainMenu/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_fo3s8")
+button_pressed = true
 text = "Map Randomisation"
 script = SubResource("GDScript_x7wl4")
 
