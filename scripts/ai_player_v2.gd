@@ -188,7 +188,7 @@ func reward() -> float:
 	if deathPenalty == true: return -300
 	elif winReward == true: return 600 * timeRewardMultiplier
 	elif hasGotCloser: return 1
-	else: return -1
+	else: return -2
 
 func reset() -> void:
 	self.global_position = spawnPosition
