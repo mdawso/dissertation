@@ -30,7 +30,8 @@ var baseTiles : PackedByteArray
 
 func _ready() -> void:
 	baseTiles = tile_map_data
-	randomise_map()
+	if MapSettings.rand: randomise_map()
+	else: set_basic_map()
 
 func place_pillar(pos : Vector2i, w : int, h : int, upper_spacing : int) -> void:
 	
@@ -46,6 +47,11 @@ func place_pillar(pos : Vector2i, w : int, h : int, upper_spacing : int) -> void
 			var coords : Vector2i = Vector2i(x,-y_2)
 			set_cell(coords, 0, Vector2i.ZERO, 0)
 			
+func set_basic_map() -> void:
+	set_tile_map_data_from_array(baseTiles) # reset map
+	for x in XS:
+		var coords = Vector2i(x, 0)
+		place_pillar(coords, 3, 4, 2)
 
 func randomise_map() -> void:
 	set_tile_map_data_from_array(baseTiles) # reset map

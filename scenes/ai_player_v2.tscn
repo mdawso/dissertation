@@ -45,6 +45,12 @@ top_level = true
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="DEBUG_FrameLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "frame"
+label_settings = ExtResource("3_urhbb")
+
 [node name="DEBUG_TimerLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -54,20 +60,20 @@ label_settings = ExtResource("3_urhbb")
 [node name="DEBUG_PrevTimeLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "timer"
+text = "prevtime"
 label_settings = ExtResource("3_urhbb")
 
 [node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-text = "state label"
+text = "state"
 label_settings = ExtResource("3_urhbb")
 
 [node name="DEBUG_TimeRewardMultiplierLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "WinReward"
+text = "mult"
 label_settings = ExtResource("3_urhbb")
 
 [node name="DEBUG_StuckTimeLabel" type="Label" parent="DEBUG_CanvasLayer/VBoxContainer"]

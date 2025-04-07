@@ -25,6 +25,7 @@ var maxStuckTime : float = 2.0
 
 const observing : bool = true # bool to toggle all data gathering for model, debug
 
+var frame : int = 0
 
 @onready var finish_line_raycast: RayCast2D = %FinishLineRaycast
 
@@ -36,6 +37,7 @@ const observing : bool = true # bool to toggle all data gathering for model, deb
 @onready var debug_time_reward_multiplier_label: Label = %DEBUG_TimeRewardMultiplierLabel
 @onready var debug_stuck_time_label: Label = %DEBUG_StuckTimeLabel
 @onready var debug_prev_time_label: Label = %DEBUG_PrevTimeLabel
+@onready var debug_frame_label: Label = %DEBUG_FrameLabel
 
 var spawnPosition : Vector2
 
@@ -54,7 +56,7 @@ func eval_time_reward(time : float) -> void:
 			timeRewardMultiplier = 1.2
 		else:
 			timeRewardMultiplier = 0.8
-		prevTime = time
+	prevTime = time
 		# TODO put stuff here
 		# this is arbitrary
 		# actually maybe good idk
@@ -72,6 +74,7 @@ func stuck_reset() -> void:
 	reset()
 	
 func update_labels() -> void:
+	debug_frame_label.text = "frame: " + str(frame) + " / " + str(frame / 60) 
 	debug_timer_label.text = "current time: " + str(snapped(runTimer, 0.01))
 	debug_prev_time_label.text = "prev time: " + str(snapped(prevTime, 0.01))
 	debug_time_reward_multiplier_label.text = "prev mult: " + str(timeRewardMultiplier)
@@ -204,6 +207,8 @@ func _ready() -> void:
 		print("%s Connected" % [self])
 
 func _physics_process(delta: float) -> void:
+	
+	frame += 1
 	
 	if peer.get_status() == peer.STATUS_CONNECTED:
 		
