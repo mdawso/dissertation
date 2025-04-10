@@ -15,10 +15,9 @@ sources/0 = SubResource("TileSetAtlasSource_vdhxe")
 [sub_resource type="GDScript" id="GDScript_y4grx"]
 script/source = "extends TileMapLayer
 
-const XS = [-15, -5, 5]
-
-const W_MIN = 1
-const W_MAX = 3
+const XS = [-21, -18, -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15, 18]
+const W = 3
+const US = 3
 
 const H_MIN = 3
 const H_MAX = 4
@@ -57,10 +56,8 @@ func randomise_map() -> void:
 	set_tile_map_data_from_array(baseTiles) # reset map
 	for x in XS:
 		var coords = Vector2i(x, 0)
-		var w = 10
 		var h = randi_range(H_MIN, H_MAX)
-		var us = 3
-		place_pillar(coords, w, h, us)
+		place_pillar(coords, W, h, US)
 	
 "
 

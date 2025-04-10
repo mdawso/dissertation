@@ -24,7 +24,6 @@ target_position = Vector2(50, -50)
 
 [node name="DEBUG_FinishLineVector" type="Line2D" parent="FinishLineRaycast"]
 unique_name_in_owner = true
-visible = false
 points = PackedVector2Array(0, 0, 0, 0)
 width = 2.0
 
@@ -40,6 +39,7 @@ unique_name_in_owner = true
 top_level = true
 
 [node name="DEBUG_CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DEBUG_CanvasLayer"]
 offset_right = 40.0

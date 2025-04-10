@@ -38,6 +38,7 @@ var frame : int = 0
 @onready var debug_stuck_time_label: Label = %DEBUG_StuckTimeLabel
 @onready var debug_prev_time_label: Label = %DEBUG_PrevTimeLabel
 @onready var debug_frame_label: Label = %DEBUG_FrameLabel
+@onready var debug_canvas_layer: CanvasLayer = %DEBUG_CanvasLayer
 
 var spawnPosition : Vector2
 
@@ -183,7 +184,7 @@ func reward() -> float:
 			
 			if debug_finish_line_vector_length_label.visible:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
-				debug_finish_line_vector_length_label.text = str(vecToFinishLine.length())
+				debug_finish_line_vector_length_label.text = str(snapped(vecToFinishLine.length(), 0.01))
 		
 	if deathPenalty == true: return -300
 	elif winReward == true: return 600 * timeRewardMultiplier
@@ -197,6 +198,13 @@ func reset() -> void:
 	if MapSettings.rand and Globals.Map.has_method("randomise_map"): Globals.Map.randomise_map()
 
 func _ready() -> void:
+	
+	# hide debug labels if not enabled
+	if not MapSettings.AIDebugLabels:
+		debug_canvas_layer.hide()
+		debug_visible_tile_labels.hide()
+		debug_finish_line_vector.hide()
+	
 	Globals.AIPlayer = self
 	spawnPosition = self.global_position
 	print("%s observations" % [numOfObservations])
