@@ -174,3 +174,15 @@ for iteration in range(num_iterations):
     if iteration % 100 == 0:
         target_model.load_state_dict(model.state_dict())
         print(f"Iteration {iteration}: Loss = {loss.item():.4f}, Epsilon = {epsilon:.4f}")
+
+    # every 1000 iterations save model checkpoint
+    if iteration % 1000 == 0 and iteration > 0:
+        checkpoint_path = f"model_checkpoint_{iteration}.pt"
+        T.save({
+            'iteration': iteration,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'loss': loss.item(),
+            'epsilon': epsilon
+        }, checkpoint_path)
+        print(f"Model checkpoint saved to {checkpoint_path}")

@@ -186,8 +186,8 @@ func reward() -> float:
 				debug_finish_line_vector_length_label.position = vecToFinishLine/2 + Vector2(0,-30)
 				debug_finish_line_vector_length_label.text = str(snapped(vecToFinishLine.length(), 0.01))
 		
-	if deathPenalty == true: return -300
-	elif winReward == true: return 600 * timeRewardMultiplier
+	if deathPenalty == true: return -2
+	elif winReward == true: return 2 * timeRewardMultiplier
 	elif hasGotCloser: return 1
 	else: return -2
 
