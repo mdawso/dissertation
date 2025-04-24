@@ -1,18 +1,34 @@
 \chapter{Introduction}
 
+\section{Background}
 In the area of video games, Artificial Intelligence (AI) has been used for many years to create non-player characters (NPCs) that can interact with players in a believable way.
 This is often done using finite state machines (FSMs) or behaviour trees, which allow NPCs to react to player actions in a way that seems intelligent. 
-However, these methods are by definition deterministic, meaning that the same input will always produce the same output, which can lead to predictable and uninteresting gameplay.
-Additionally, these methods require a lot of manual tuning and design work to create interesting behaviours, which can be time-consuming and expensive, epecially for large or procedurally generated worlds.
-In recent years, there has been a growing interest in using machine learning (ML) techniques to create more dynamic and adaptive NPCs.
-One of the most promising approaches to this is deep reinforcement learning (DRL), which combines deep learning with reinforcement learning (RL) to create agents that can learn to play games by interacting with their environment.
-This approach has been used successfully in a number of different games, including Atari games and board games like Go.
-
-\section{Background}
-
-Background text
+However, these methods can be limited in their ability to adapt to new situations, due to being based on pre-defined rules and behaviours. 
+For example, developing an FSM for a procedurally generated game, or one with another amount of randomness involved, can be difficult or even impossible, as the FSM must be able to handle all possible situations that may arise.
+This is the problem I will be addressing in this project.
+DRL is a subfield of machine learning that combines deep learning with reinforcement learning, allowing agents to learn from their environment and improve their performance over time.
+In the context of video games, DRL can be used to create agents that can learn to play games by interacting with the game environment, then receiving feedback in the form of rewards or penalties.
+This allows the agent to learn from its mistakes and improve its performance over time, without the need for any pre-defined rules or behaviours.
+DRL has been successfully applied to a variety of games, including board games like Go and chess, as well as video games like Snake.
+However it generally has not been applied to games in a useful capacity, such as creating in-game NPCs.
 
 \section{Aims and Objectives}
+The aim of this project is to explore the use of DRL in video games by developing a DQN agent capable of autonomously playing a custom 2D platformer game, and apply it to the game in a useful way.
+The objectives of this project are as follows:
+\begin{itemize}
+    \item Research the current state of DRL in video games, including existing methods and techniques.
+    \item Develop a custom 2D platformer game which will serve as the environment for the agent.
+    \item Develop an agent capable of playing the game.
+    \item Train the agent and evaluate its performance, comparing it to human players.
+    \item Apply the trained agent to the game in a useful way, such as creating an NPC that can interact with players.
+\end{itemize}
 
-Aims and objectives text
+\section{Limitations}
+The scope of this project will be limited by the following limitations:
+\begin{itemize}
+    \item The project will focus on a single game, rather than a variety of games.
+\end{itemize}
 
+\section{Structure of the Report}
+
+This is the structure of the report
