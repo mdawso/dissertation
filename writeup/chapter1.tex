@@ -1,34 +1,41 @@
 \chapter{Introduction}
 
-\section{Background}
-In the area of video games, Artificial Intelligence (AI) has been used for many years to create non-player characters (NPCs) that can interact with players in a believable way.
-This is often done using finite state machines (FSMs) or behaviour trees, which allow NPCs to react to player actions in a way that seems intelligent. 
+\section{Chapter Overview}
+This chapter will focus on introducing the project with an overview along with its objectives and limitations.
+
+\section{Project Background}
+In the area of video games, Artificial Intelligence (AI) has been used for many years to create non-player characters (NPCs) that can interact with players in a believable way. This was first seen in the game "Nim" in 1948 \cite{wiki_ai_games}. 
+This is often done using finite state machines (FSMs) or behaviour trees, which allow NPCs to react to player actions in a way that seems intelligent \cite{simulacrum}.
 However, these methods can be limited in their ability to adapt to new situations, due to being based on pre-defined rules and behaviours. 
 For example, developing an FSM for a procedurally generated game, or one with another amount of randomness involved, can be difficult or even impossible, as the FSM must be able to handle all possible situations that may arise.
-This is the problem I will be addressing in this project.
-DRL is a subfield of machine learning that combines deep learning with reinforcement learning, allowing agents to learn from their environment and improve their performance over time.
-In the context of video games, DRL can be used to create agents that can learn to play games by interacting with the game environment, then receiving feedback in the form of rewards or penalties.
-This allows the agent to learn from its mistakes and improve its performance over time, without the need for any pre-defined rules or behaviours.
-DRL has been successfully applied to a variety of games, including board games like Go and chess, as well as video games like Snake.
-However it generally has not been applied to games in a useful capacity, such as creating in-game NPCs.
+This is the problem that I will be experimenting with and attempting to address in this project.
+Reinforcement Learning (RL) provides an alternative approach to video game AI. 
+Unlike traditional methods, RL agents learn through interaction with their environment by receiving rewards for desirable actions. 
+This allows them to develop adaptive strategies without explicitly programmed rules.
+Building upon RL, Deep Reinforcement Learning (DRL) combines traditional RL algorithms with deep neural networks, enabling agents to process complex visual inputs and learn effective policies from high-dimensional data. 
+DRL has demonstrated remarkable capabilities in video games, as seen in systems like OpenAI's DQN that mastered Atari games and AlphaGo which defeated world champions in Go. 
+The adaptive nature of DRL makes it particularly promising for procedurally generated or dynamic game environments where traditional AI approaches struggle.
 
-\section{Aims and Objectives}
-The aim of this project is to explore the use of DRL in video games by developing a DQN agent capable of autonomously playing a custom 2D platformer game, and apply it to the game in a useful way.
-The objectives of this project are as follows:
-\begin{itemize}
-    \item Research the current state of DRL in video games, including existing methods and techniques.
-    \item Develop a custom 2D platformer game which will serve as the environment for the agent.
-    \item Develop an agent capable of playing the game.
-    \item Train the agent and evaluate its performance, comparing it to human players.
-    \item Apply the trained agent to the game in a useful way, such as creating an NPC that can interact with players.
+\section{Project Overview}
+This project will begin with research and literature review into traditional approaches to AI in video games, as well as reinforcement learning and deep reinforcement learning techniques. 
+Following this research phase, a simple game environment will be developed using the Godot game engine, designed specifically to test and showcase the capabilities of an RL agent. 
+The project will then implement and train an RL agent to operate within this environment, focusing on creating NPCs that can learn and adapt to changes within the game rather than following predetermined patterns. 
+The performance of these agents will be evaluated against traditional AI methods, and the final implementation will include an RL agent as some part of the game. 
+
+\section{Project Aim and Objectives}
+The primary aim of this project be to attempt a non-standard machine learning based apporach to video game AI.
+\begin{itemize} 
+    \item Research and understand how existing AI in video games works, then the fundamentals of Reinforcement Learning (RL) and its application in video games.
+    \item Design and implement a video game environment suitable for testing RL agents.
+    \item Develop and train an RL agent to interact with the game.
+    \item Evaluate the performance of the RL agent.
+    \item Implement the RL agent as part of the game, and have it interact with players.
 \end{itemize}
 
 \section{Limitations}
-The scope of this project will be limited by the following limitations:
-\begin{itemize}
-    \item The project will focus on a single game, rather than a variety of games.
+This project will have the following limitations:
+\begin{itemize} 
+    \item The game will be custom made, rather than an existing one.
+    \item The game will have simple graphics and gameplay, acting more as a "front-end" for the model which will be the main focus of the project.
+    \item The model will be lightweight, and will need to run on a single CPU and/or GPU. It must also not consume too much memory. This is to ensure that I can train and run it on my hardware.
 \end{itemize}
-
-\section{Structure of the Report}
-
-This is the structure of the report
