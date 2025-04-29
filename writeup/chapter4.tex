@@ -1,0 +1,42 @@
+\chapter{Design Decisions}
+
+Over the course of the development of my project, I had to make numerous design decisions for each part. 
+This chapter lays out and explains the design decisions I made, along with justifications for them.
+
+\section{Version Control System}
+
+Throughout the development of the project, I will use the industry-standard Git version control system. 
+This allows me to keep snapshots of the project over time, so I can revert if anything goes wrong, as well as keeping the project backed up to GitHub.
+
+\section{Development of the Game}
+
+To develop the game frontend, I needed to choose a game engine or game development framework. Throughout my research, I considered three different options, Godot, Unity and Pygame.
+
+I chose the Godot game engine for the following reasons:
+\begin{itemize}
+    \item Godot is open-source and free to use, which aligns with academic project requirements.
+    \item It is natively compatible with Git, as all the resources are plain text based.
+    \item It is extremely lightweight to develop with, not requiring an install and being 130MB in size.
+    \item It has a simple and intuitive user interface that I already have experience using, allowing for faster development.
+    \item The engine uses GDScript, a Python-like language that is easy to learn and use.
+    \item Godot has robust 2D capabilities, which matched the requirements of my game project.
+    \item It has a supportive community and extensive documentation, helpful for troubleshooting.
+    \item The engine's node-based architecture provides flexibility in designing game components.
+    \item It offers cross-platform deployment options, making the game accessible on multiple devices. This is important because the university machines run Linux, while my home machine runs Windows, and I need to ensure it runs on both.
+    \item The engine features networking features, which will be essential in connecting to the model as Godot does not natively support any machine learning libraries.
+\end{itemize}
+
+\section{Development of the Model}
+
+To develop the model backend, I chose to use PyTorch as my machine learning framework. PyTorch offers several advantages that made it suitable for this project:
+
+\begin{itemize}
+    \item PyTorch has a flexible and intuitive API, making it easier to develop and debug models.
+    \item It has extensive community support and documentation, providing solutions to common problems.
+    \item The framework includes built-in tools for neural network development and training.
+    \item It supports GPU acceleration, which significantly speeds up the training process.
+    \item PyTorch's dynamic computation graph allows for more flexible model designs.
+    \item It integrates well with Python data science libraries like NumPy and Pandas.
+    \item The framework has robust support for reinforcement learning algorithms, which was essential for my game AI.
+    \item It allows for easy deployment of models through TorchServe or simple API integration.
+\end{itemize}

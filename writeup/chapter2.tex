@@ -11,6 +11,15 @@ This section explores some existing traditional methods of implementing AI in vi
 
 A Finite State Machine (FSM) is a computational model that has been foundational in video game AI development for decades. 
 FSMs represent an agent's behavior as a set of discrete states, with well-defined transitions between these states triggered by specific conditions or events \cite{spiceworks_fsm}. 
+
+%\begin{figure}[ht]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{figures/fsm.png}
+%    \caption{A simple FSM}
+%    \label{fig:fsm}
+%    \cite{fsms}
+%\end{figure}
+
 Each state encapsulates a particular behavior or action pattern, while transitions define the rules governing when an agent should change its behavior. 
 The simplicity and predictability of FSMs make them particularly suitable for controlling NPCs with straightforward behavioral patterns, as they are computationally efficient and easily debuggable.
 However, FSMs face significant limitations as complexity increases: the number of states and transitions can grow exponentially, leading to the "state explosion" problem that makes maintenance challenging.
@@ -55,6 +64,13 @@ At its core, RL is formalized as a Markov Decision Process (MDP) consisting of:
     \item A reward function $R(s,a,s')$ providing feedback on the quality of decisions
     \item A discount factor $\gamma \in [0,1]$ determining the importance of future rewards
 \end{itemize}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/mdp_framework.png}
+    \caption{MDP Graph}
+    \label{fig:mdp-framework}
+\end{figure}
 
 The agent's objective is to learn a policy $\pi$ that maps states to actions in a way that maximizes the expected cumulative reward. 
 This optimization process balances immediate rewards against long-term consequences, addressing the fundamental exploration-exploitation dilemma: whether to capitalize on known good strategies or explore new possibilities that might yield better results.
