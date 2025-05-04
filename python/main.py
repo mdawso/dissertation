@@ -50,7 +50,7 @@ class DQN(nn.Module):
         return x
 
 def get_latest_checkpoint():
-    """Find the latest checkpoint file based on iteration number."""
+    # Find the latest checkpoint file based on iteration number
     checkpoint_files = glob.glob("model_checkpoint_*.pt")
     if not checkpoint_files:
         return None
@@ -61,7 +61,7 @@ def get_latest_checkpoint():
     return latest_file
 
 def setup_connection():
-    """Setup TCP connection with Godot."""
+    # Setup TCP connection with Godot
     TCP_IP = "127.0.0.1"
     TCP_PORT = 9876
 
@@ -85,7 +85,7 @@ def setup_connection():
     return conn
 
 def train_model():
-    """Train the DQN model."""
+    # Train the model 
     checkpointing = True
     num_iterations = 999_999_999
 

@@ -12,13 +12,12 @@ This section explores some existing traditional methods of implementing AI in vi
 A Finite State Machine (FSM) is a computational model that has been foundational in video game AI development for decades. 
 FSMs represent an agent's behavior as a set of discrete states, with well-defined transitions between these states triggered by specific conditions or events \cite{spiceworks_fsm}. 
 
-%\begin{figure}[ht]
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{figures/fsm.png}
-%    \caption{A simple FSM}
-%    \label{fig:fsm}
-%    \cite{fsms}
-%\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/fsm_example.png}
+    \caption{A simple FSM for an enemy NPC}
+    \label{fig:fsm}
+\end{figure}
 
 Each state encapsulates a particular behavior or action pattern, while transitions define the rules governing when an agent should change its behavior. 
 The simplicity and predictability of FSMs make them particularly suitable for controlling NPCs with straightforward behavioral patterns, as they are computationally efficient and easily debuggable.
@@ -36,6 +35,13 @@ BTs excel at creating responsive AI that can react to changing game conditions w
 They facilitate an incremental development approach, allowing designers to progressively refine AI by adding branches without disrupting existing functionality.
 While BTs require more initial design consideration than FSMs, their scalability, maintainability, and ability to represent sophisticated decision-making logic have made them the standard approach for contemporary game AI systems, particularly in action, strategy, and open-world games where adaptable NPC behavior is critical to player experience.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/bt.png}
+    \caption{A simple BT for an enemy NPC}
+    \label{fig:bt}
+\end{figure}
+
 \subsection{Goal-Oriented Action Planning}
 
 Goal-Oriented Action Planning (GOAP) represents a more dynamic approach to AI decision-making compared to FSMs and BTs. 
@@ -46,6 +52,13 @@ This approach allows NPCs to solve problems creatively and adapt to unexpected c
 GOAP gained prominence through its implementation in F.E.A.R. (2005) \cite{thompson2020fear}, where it produced enemies capable of contextually appropriate tactical behaviors like seeking cover, flanking the player, and coordinating with allies. 
 The system's strength lies in its separation of goals (what the agent wants to achieve) from the specific methods to achieve them, creating emergent behavior that can surprise even the developers.
 While GOAP offers exceptional adaptability and problem-solving capabilities, it comes with higher computational costs and increased implementation complexity compared to FSMs and BTs. Despite these challenges, GOAP remains valuable for games requiring sophisticated AI that can respond intelligently to dynamic and unpredictable gameplay scenarios.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/goap.png}
+    \caption{Example of a GOAP planning sequence}
+    \label{fig:goap}
+\end{figure}
 
 \section{Reinforcement Learning}
 
@@ -65,15 +78,17 @@ At its core, RL is formalized as a Markov Decision Process (MDP) consisting of:
     \item A discount factor $\gamma \in [0,1]$ determining the importance of future rewards
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/mdp_framework.png}
-    \caption{MDP Graph}
+    \caption{A simple MDP Graph example. S Nodes represent states and A nodes represent actions. 
+    Some actions can result in more than one state, the transition probabilities are marked in black. 
+    Some actions result in a positive or negative reward, marked in red.}
     \label{fig:mdp-framework}
 \end{figure}
 
 The agent's objective is to learn a policy $\pi$ that maps states to actions in a way that maximizes the expected cumulative reward. 
-This optimization process balances immediate rewards against long-term consequences, addressing the fundamental exploration-exploitation dilemma: whether to capitalize on known good strategies or explore new possibilities that might yield better results.
+This optimisation process balances immediate rewards against long-term consequences, addressing the fundamental exploration-exploitation dilemma: whether to capitalize on known good strategies or explore new possibilities that might yield better results.
 RL algorithms generally fall into three categories: value-based methods (like Q-learning), policy-based methods (such as policy gradients), and actor-critic approaches that combine aspects of both. 
 The choice of algorithm depends on factors including the complexity of the state space, whether the environment is fully observable, and computational constraints.
 Unlike traditional AI techniques, RL offers adaptability to unexpected situations and can discover novel strategies beyond designer expectations. 

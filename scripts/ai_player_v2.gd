@@ -192,10 +192,16 @@ func reward() -> float:
 	else: return -2
 
 func reset() -> void:
-	self.global_position = spawnPosition
-	eval_time_reward(runTimer)
-	runTimer = 0
-	if MapSettings.rand and Globals.Map.has_method("randomise_map"): Globals.Map.randomise_map()
+	if MapSettings.PlayerEnabled:
+		Globals.timeToBeat = runTimer
+		if Globals.Player: Globals.Player.start_timer()
+		#print(Globals.timeToBeat)
+		queue_free()
+	else:
+		self.global_position = spawnPosition
+		eval_time_reward(runTimer)
+		runTimer = 0
+		if MapSettings.rand and Globals.Map.has_method("randomise_map"): Globals.Map.randomise_map()
 
 func _ready() -> void:
 	

@@ -21,12 +21,20 @@ texture = ExtResource("2_s0t8o")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TimeToBeatLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 88.0
-offset_bottom = 24.0
+layout_mode = 2
+text = "TTB"
+label_settings = ExtResource("3_n5uid")
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 text = "Timer"
 label_settings = ExtResource("3_n5uid")
 vertical_alignment = 1

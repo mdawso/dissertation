@@ -12,3 +12,5 @@ func isWithinFinishLineBounds(point : Vector2) -> bool:
 	else: return false
 
 var Map : TileMapLayer
+
+var timeToBeat : float
