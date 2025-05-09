@@ -1,2 +1,82 @@
-\chapter{Requirements}
+\chapter{Problem Analysis and Requirements}
 
+This chapter contains an analysis of the problem and breaks it down into sub problems. It then sets out the functional and non-functional requirements.
+
+\section{Problem Analysis}
+The problem can be broken down into three main components:
+
+\subsection{Video Game Development}
+Creating a basic video game involves designing core gameplay mechanics, implementing player controls, creating a game environment, and establishing basic game rules and objectives. 
+This requires selecting an appropriate game engine that supports the planned features and performance requirements. 
+Core gameplay mechanics and rules must be defined to provide an engaging player experience, while visual assets and user interface elements need implementation to create a cohesive visual identity. 
+Player control systems need to be intuitive and responsive, allowing for meaningful interaction with the game world. Finally, clear win/lose conditions need establishment to provide players with goals and motivation.
+
+\subsection{Network Communication Interface}
+Connecting an external AI agent to the game requires establishing a reliable communication channel. 
+This involves designing a networking protocol that efficiently transmits necessary game state information and receives AI decisions. 
+A server-client architecture must be implemented to facilitate this exchange, along with data serialization and parsing mechanisms to ensure proper interpretation of messages on both ends. 
+Synchronization between game state and AI agent is critical to maintain consistency, while also managing network latency and potential disconnections to ensure smooth gameplay even under non-ideal network conditions.
+
+\subsection{AI Integration into Gameplay}
+Incorporating the AI agent as part of the gameplay loop involves defining the AI's role within the game context, whether as an opponent, ally, or environmental element. 
+Interfaces for AI action and observation must be created to allow the AI to both perceive the game state and affect it meaningfully. 
+Game state representation needs careful implementation to provide the AI with relevant information in a consumable format. The AI's capabilities must be balanced with player experience to ensure engaging but fair gameplay. 
+Additionally, feedback mechanisms must be designed to showcase AI behavior, allowing players to understand and respond to AI actions appropriately.
+
+\section{Functional Requirements}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement} \\
+        \hline
+        FR1 & The system must implement a playable video game with clear objectives and mechanics \\
+        \hline
+        FR2 & The game must provide intuitive player controls and interface \\
+        \hline
+        FR3 & The system must implement a client-server network architecture for AI communication \\
+        \hline
+        FR4 & The system must be able to transmit game state information to an external AI agent \\
+        \hline
+        FR5 & The system must be able to receive and process action commands from an external AI agent \\
+        \hline
+        FR6 & The game must incorporate AI actions into the gameplay loop in real-time \\
+        \hline
+        FR7 & The system must provide a complete representation of relevant game state to the AI \\
+        \hline
+        FR8 & The game must provide visual feedback of AI actions to the human player \\
+        \hline
+        FR9 & The system must handle connection initialization and termination with the AI agent \\
+        \hline
+        FR10 & The game must implement win/lose conditions that account for AI participation \\
+        \hline
+    \end{tabular}
+    \caption{Functional Requirements}
+\end{table}
+
+\section{Non-functional Requirements}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|}
+        \hline
+        \textbf{ID} & \textbf{Requirement} \\
+        \hline
+        NFR1 & The game must maintain a minimum framerate of 30 FPS during gameplay \\
+        \hline
+        NFR2 & Network communication latency should not exceed 100ms under normal conditions \\
+        \hline
+        NFR3 & The system must recover gracefully from network disconnections \\
+        \hline
+        NFR4 & The game should be accessible to users with minimal gaming experience \\
+        \hline
+        NFR5 & The communication protocol must be well-documented for AI integration \\
+        \hline
+        NFR6 & The game's codebase must be maintainable and well-structured \\
+        \hline
+        NFR7 & The system should provide logging capabilities for debugging AI interactions \\
+        \hline
+        NFR8 & The game must run on standard desktop hardware without specialized requirements \\
+        \hline
+    \end{tabular}
+    \caption{Non-functional Requirements}
+\end{table}
