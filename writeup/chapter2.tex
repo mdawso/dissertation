@@ -96,11 +96,22 @@ The choice of algorithm depends on factors including the complexity of the state
 Unlike traditional AI techniques, RL offers adaptability to unexpected situations and can discover novel strategies beyond designer expectations. 
 However, these advantages come with challenges including high sample complexity (requiring many environment interactions), difficulty in specifying appropriate reward functions, and potential convergence to suboptimal solutions when trained in limited scenarios.
 
+\subsubsection{The Bellman equation}
+The Bellman equation provides a mathematical foundation for solving Markov Decision Processes (MDPs) by establishing recursive relationships between value functions of different states. 
+It serves as the cornerstone of many RL algorithms.
+The Bellman equation defines the optimal value function $V^*(s)$ for each state $s$ as:
+$$V^*(s) = \max_{a} \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V^*(s') \right]$$
+This recursive formulation elegantly captures the principle that the value of a state equals the reward obtained from the best action plus the discounted expected value of the successor state. For policies, the Bellman expectation equation becomes:
+$$V^{\pi}(s) = \sum_{a} \pi(a|s) \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a) V^{\pi}(s') \right]$$
+Similarly, the action-value function $Q^*(s,a)$ represents the expected return starting from state $s$, taking action $a$, and thereafter following the optimal policy:
+$$Q^*(s,a) = R(s,a) + \gamma \sum_{s'} P(s'|s,a) \max_{a'} Q^*(s',a')$$
+Many RL algorithms iteratively apply these equations to converge to optimal solutions. Value iteration repeatedly updates state values using the Bellman optimality equation until convergence. Policy iteration alternates between policy evaluation (calculating values for the current policy) and policy improvement (selecting better actions based on updated values).
+While solving the Bellman equation exactly requires complete knowledge of the environment's dynamics (transition probabilities and rewards), most practical RL algorithms like Q-learning approximate solutions through sampling and iterative updates, enabling agents to learn optimal policies through experience rather than explicit environment models.
+
 \subsection{Deep Reinforcement Learning}
 
 Deep Reinforcement Learning (DRL) combines classical RL with deep neural networks to handle high-dimensional state spaces that would be intractable with traditional tabular methods. 
 This integration enables RL to operate effectively in complex environments with visual inputs, continuous action spaces, and intricate state representations common in modern video games.
-
 The breakthrough Deep Q-Network (DQN) algorithm, introduced by DeepMind in 2015, demonstrated superhuman performance on Atari games using only pixel inputs and game scores. DQN employs several key innovations including:
 \begin{itemize}
     \item Experience replay, which stores and randomly samples past experiences to break correlation between sequential samples
