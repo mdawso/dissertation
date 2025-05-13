@@ -10,7 +10,7 @@ This section explores some existing traditional methods of implementing AI in vi
 \subsection{Finite State Machines}
 
 A Finite State Machine (FSM) is a computational model that has been foundational in video game AI development for decades. 
-FSMs represent an agent's behavior as a set of discrete states, with well-defined transitions between these states triggered by specific conditions or events \cite{spiceworks_fsm}. 
+FSMs represent an agent's behaviour as a set of discrete states, with well-defined transitions between these states triggered by specific conditions or events \cite{spiceworks_fsm}. 
 
 \begin{figure}[H]
     \centering
@@ -19,21 +19,21 @@ FSMs represent an agent's behavior as a set of discrete states, with well-define
     \label{fig:fsm}
 \end{figure}
 
-Each state encapsulates a particular behavior or action pattern, while transitions define the rules governing when an agent should change its behavior. 
-The simplicity and predictability of FSMs make them particularly suitable for controlling NPCs with straightforward behavioral patterns, as they are computationally efficient and easily debuggable.
+Each state encapsulates a particular behaviour or action pattern, while transitions define the rules governing when an agent should change its behaviour. 
+The simplicity and predictability of FSMs make them particularly suitable for controlling NPCs with straightforward behavioural patterns, as they are computationally efficient and easily debuggable.
 However, FSMs face significant limitations as complexity increases: the number of states and transitions can grow exponentially, leading to the "state explosion" problem that makes maintenance challenging.
-Additionally, FSMs struggle with handling concurrent behaviors and can appear rigid when compared to more dynamic AI approaches. 
+Additionally, FSMs struggle with handling concurrent behaviours and can appear rigid when compared to more dynamic AI approaches. 
 Despite these limitations, FSMs remain prevalent in game development due to their intuitive implementation and reliable performance for many common AI tasks.
 
 \subsection{Behaviour Trees}
 
 Behaviour Trees (BTs) represent a significant advancement over FSMs in game AI architecture, offering a hierarchical, modular approach to decision-making. 
-Originally developed for robotics and adopted by the game industry in titles like Halo 2 \cite{simulacrum}, BTs organize agent behaviors into a tree structure where leaf nodes represent atomic actions and internal nodes control flow through various composites such as sequences, selectors, and parallels. 
-This structure enables developers to create complex, reusable behavior patterns that can be visually represented and intuitively understood. 
-Unlike FSMs, BTs naturally handle concurrent actions and gracefully manage behavior prioritization through their hierarchical evaluation.
-BTs excel at creating responsive AI that can react to changing game conditions while maintaining coherent behavior patterns. 
+Originally developed for robotics and adopted by the game industry in titles like Halo 2 \cite{simulacrum}, BTs organize agent behaviours into a tree structure where leaf nodes represent atomic actions and internal nodes control flow through various composites such as sequences, selectors, and parallels. 
+This structure enables developers to create complex, reusable behaviour patterns that can be visually represented and intuitively understood. 
+Unlike FSMs, BTs naturally handle concurrent actions and gracefully manage behaviour prioritization through their hierarchical evaluation.
+BTs excel at creating responsive AI that can react to changing game conditions while maintaining coherent behaviour patterns. 
 They facilitate an incremental development approach, allowing designers to progressively refine AI by adding branches without disrupting existing functionality.
-While BTs require more initial design consideration than FSMs, their scalability, maintainability, and ability to represent sophisticated decision-making logic have made them the standard approach for contemporary game AI systems, particularly in action, strategy, and open-world games where adaptable NPC behavior is critical to player experience.
+While BTs require more initial design consideration than FSMs, their scalability, maintainability, and ability to represent sophisticated decision-making logic have made them the standard approach for contemporary game AI systems, particularly in action, strategy, and open-world games where adaptable NPC behaviour is critical to player experience.
 
 \begin{figure}[H]
     \centering
@@ -49,7 +49,7 @@ GOAP employs principles from automated planning and means-end analysis to create
 In a GOAP system, each action is associated with both preconditions (requirements that must be satisfied before the action can be taken) and effects (how the action changes the world state).
 The AI agent uses planning algorithms, commonly A* search, to find the optimal sequence of actions that transforms the current state into the goal state. 
 This approach allows NPCs to solve problems creatively and adapt to unexpected changes in the game environment.
-GOAP gained prominence through its implementation in F.E.A.R. (2005) \cite{thompson2020fear}, where it produced enemies capable of contextually appropriate tactical behaviors like seeking cover, flanking the player, and coordinating with allies. 
+GOAP gained prominence through its implementation in F.E.A.R. (2005) \cite{thompson2020fear}, where it produced enemies capable of contextually appropriate tactical behaviours like seeking cover, flanking the player, and coordinating with allies. 
 The system's strength lies in its separation of goals (what the agent wants to achieve) from the specific methods to achieve them.
 While GOAP offers exceptional adaptability and problem-solving capabilities, it comes with higher computational costs and increased implementation complexity compared to FSMs and BTs. Despite these challenges, GOAP remains valuable for games requiring sophisticated AI that can respond intelligently to dynamic and unpredictable gameplay scenarios.
 
@@ -66,7 +66,7 @@ This section explores fundamental RL concepts and algorithms.
 
 \subsection{RL Fundamentals and the Markov Decision Process}
 
-Reinforcement Learning (RL) represents a departure from traditional game AI approaches by focusing on learning optimal behaviors through trial and error interaction with an environment. 
+Reinforcement Learning (RL) represents a departure from traditional game AI approaches by focusing on learning optimal behaviours through trial and error interaction with an environment. 
 Unlike FSMs, BTs, or GOAP systems that rely on pre-programmed rules, RL agents improve their decision-making capabilities through experience.
 
 At its core, RL is formalized as a Markov Decision Process (MDP) consisting of:

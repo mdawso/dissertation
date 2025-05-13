@@ -15,7 +15,7 @@ This allows me to keep snapshots of the project over time, so I can revert if an
 To develop the game frontend, I needed to choose a game engine or game development framework. Throughout my research, I considered three different options, Godot, Unity and Pygame.
 I selected Godot over Unity and Pygame after careful consideration of my project's requirements. 
 While Unity offers powerful features, its proprietary nature, heavyweight installation, and steep learning curve made it less suitable for my academic project. 
-Unity's reliance on the C Sharp programming language would also have required additional time investment to master. 
+Unity's reliance on the C\# programming language would also have required additional time investment to master. 
 Pygame, despite its Python compatibility that would have allowed native interfacing with PyTorch, lacks a graphical development environment and many built-in features that would speed up development. 
 In contrast, Godot offered the perfect balance: it's open-source and free, extremely lightweight (only 130MB), uses a Python-like language (GDScript) that was quick to learn, features an intuitive interface I was already familiar with, and provides excellent 2D capabilities that matched my game requirements.
 Additionally, Godot's plain text resources integrate seamlessly with Git, its cross-platform compatibility ensures the game works on both Windows and Linux environments (critical for working between home and university), and its networking features provide essential connectivity to the backend model.
@@ -40,7 +40,7 @@ This implementation provides acceleration capabilities for AMD graphics cards bu
 However, after thorough testing, I found this additional layer unnecessary as my CPU handled both model training and execution without performance issues.
 Nevertheless, to ensure optimal performance across different hardware configurations, the final implementation includes automatic detection for CUDA support. 
 When running on NVIDIA hardware with appropriate drivers, the application automatically leverages GPU acceleration to enhance model training speed and inference performance. 
-This design decision maintains the project's versatility across various computing environments while optimizing performance when possible.
+This design decision maintains the project's versatility across various computing environments while optimising performance when possible.
 
 \section{Design of the Game}
 
@@ -63,24 +63,24 @@ Additionally, platformers offer clear, discrete states and actions that translat
 The character can move left, right, jump, or perform other specific actions, while the game state can be represented efficiently for the ML model to process.
 This clarity in the action space makes platformers an excellent testbed for AI development, as the model must learn fundamental gaming concepts like obstacle avoidance, timing, and spatial navigation.
 The tile-based structure also facilitates procedural level generation, allowing me to create varied environments for training the AI without manually designing each level. 
-This was particularly important for developing robust models that could generalize across different scenarios rather than overfitting to specific level layouts.
+This was particularly important for developing robust models that could generalise across different scenarios rather than overfitting to specific level layouts.
 
 I decided to design the game around a clear, measurable objective: completing a time-based obstacle course. This design choice was deliberate as it provides several advantages for both gameplay and AI development.
 From a gameplay perspective, a timed obstacle course offers an intuitive goal that requires no elaborate explanation - players simply need to reach the end as quickly as possible. 
-This straightforward objective creates natural replay value as players (human or AI) attempt to optimize their route and execution to achieve faster completion times.
+This straightforward objective creates natural replay value as players (human or AI) attempt to optimise their route and execution to achieve faster completion times.
 From a machine learning standpoint, this objective is ideal because it creates a well-defined reward function where success can be quantified precisely through time measurements. 
-The faster an agent completes the course, the better its performance, providing a clear optimization target for reinforcement learning algorithms.
-This design also allows for incremental learning progression. An AI agent can first learn the fundamental task of reaching the goal, then gradually optimize for speed - mirroring how human players typically approach such challenges. 
+The faster an agent completes the course, the better its performance, providing a clear optimisation target for reinforcement learning algorithms.
+This design also allows for incremental learning progression. An AI agent can first learn the fundamental task of reaching the goal, then gradually optimise for speed - mirroring how human players typically approach such challenges. 
 The continuous nature of the time metric (as opposed to binary success/failure) gives the learning algorithm more nuanced feedback about small improvements in performance.
-Additionally, timed courses naturally incorporate key platforming challenges like precise jumping, obstacle avoidance, and route optimization, creating a rich environment for AI learning while remaining accessible to human players for comparison.
+Additionally, timed courses naturally incorporate key platforming challenges like precise jumping, obstacle avoidance, and route optimisation, creating a rich environment for AI learning while remaining accessible to human players for comparison.
 
 \section{Spriting and Graphics}
 A small part of this project involves the creation of graphics, so we can see what is going on. In 2D games these are referred to as sprites.
-For the graphical elements of the game, I opted to create all assets using Aseprite, a specialized pixel art editor. This decision aligned perfectly with both the technical requirements of the project and the aesthetic direction I wanted to pursue.
+For the graphical elements of the game, I opted to create all assets using Aseprite, a specialised pixel art editor. This decision aligned perfectly with both the technical requirements of the project and the aesthetic direction I wanted to pursue.
 I deliberately chose a pixel art style for several reasons. 
 First, the simplicity of pixel graphics reduced development time, allowing me to focus more on the AI components that were the primary focus of my research. 
 Second, pixel art's grid-based structure naturally complemented the tile-based nature of the platformer, creating visual coherence between the mechanics and aesthetics. 
 Finally, the minimalist style ensured that game elements remained visually distinct and easily recognisable.
 Using Aseprite, I created character sprites for the player character and AI character, as well as tiles for terrain and the finish line.
-I maintained a consistent color palette throughout to ensure visual harmony, limiting myself to a small set of colors that clearly differentiated between game elements while providing adequate contrast.
+I maintained a consistent colour palette throughout to ensure visual harmony, limiting myself to a small set of colours that clearly differentiated between game elements while providing adequate contrast.
 For creating the user interface I used two fonts: PressStart2P, and the default Godot font provided with the engine. Both are open source and free to use.

@@ -41,12 +41,12 @@ To evaluate the agent's adaptability across diverse environments, I implemented 
 
 \begin{itemize}
     \item \textbf{Pillars}: Generates vertical obstacles of variable height and width between the player starting position and the goal. This design tests the agent's ability to navigate vertical challenges through precise jumping.
-    \item \textbf{Snake}: Creates a randomized horizontal tunnel pathway that winds between the starting position and the goal. This configuration evaluates the agent's capacity to follow constrained paths.
-    \item \textbf{Platforms}: Places discontinuous platforms at randomized heights across the map. This challenging layout requires the agent to make calculated jumps between platforms while avoiding fatal falls through the gaps.
+    \item \textbf{Snake}: Creates a randomised horizontal tunnel pathway that winds between the starting position and the goal. This configuration evaluates the agent's capacity to follow constrained paths.
+    \item \textbf{Platforms}: Places discontinuous platforms at randomised heights across the map. This challenging layout requires the agent to make calculated jumps between platforms while avoiding fatal falls through the gaps.
 \end{itemize}
 
 The procedural generation system ensures that each training episode presents the agent with a unique layout while maintaining consistent difficulty parameters. 
-This approach prevents the model from simply memorizing specific map solutions and instead encourages the development of generalized navigation strategies.
+This approach prevents the model from simply memorising specific map solutions and instead encourages the development of generalised navigation strategies.
 The map type can be selected by the user from the main menu with a drop down selector box.
 
 \begin{figure}[H]
@@ -104,7 +104,7 @@ These computational constraints led me to pursue a more efficient observation ap
 
 After experimentation with various observation window sizes, I determined that a 7×7 grid centered on the player offered an optimal balance between environmental awareness and computational efficiency. 
 This window size provides sufficient context about nearby obstacles, pathways, and goals while keeping the state representation compact and manageable. 
-The constrained field of view also encourages the agent to develop more generalizable navigation strategies rather than memorizing specific map layouts, potentially improving transfer learning capabilities across different environments.
+The constrained field of view also encourages the agent to develop more generalizable navigation strategies rather than memorising specific map layouts, potentially improving transfer learning capabilities across different environments.
 The agent perceives a 7×7 grid centered on its position, providing sufficient contextual awareness of the immediate surroundings.
 
 This observation window uses a simple numerical encoding scheme:
@@ -126,7 +126,7 @@ This observation window uses a simple numerical encoding scheme:
 
 The observation mechanism operates on each frame update, scanning the surrounding tiles relative to the agent's position. 
 For each coordinate within the 7×7 grid, the system queries the tilemap to determine the tile type at that location. 
-This information is then encoded according to the numerical scheme and assembled into a two-dimensional array.
+This information is then encoded according to the numerical scheme and assembled into an array.
 This process is run twice, once for the initial observation, and again for the second observation used alongside the reward.
 
 This representation offers several advantages:
@@ -182,7 +182,7 @@ To implement this, I used the \textit{socket} library on the python side, and a 
 The Python component of the system was designed with two distinct operational modes:
 
 \begin{itemize}
-    \item \textbf{Training Mode}: Incorporates epsilon-greedy exploration strategies and periodically saves model checkpoints to preserve training progress. This mode focuses on model improvement through experience gathering and optimization.
+    \item \textbf{Training Mode}: Incorporates epsilon-greedy exploration strategies and periodically saves model checkpoints to preserve training progress. This mode focuses on model improvement through experience gathering and optimisation.
     \item \textbf{Play Mode}: Loads the latest saved checkpoint and plays deterministically with epsilon set to zero, demonstrating the current capabilities of the trained model without further exploration.
 \end{itemize}
 
@@ -200,7 +200,7 @@ The core networking loop on the Godot side follows a structured pattern of state
 \end{enumerate}
 
 This communication cycle repeats once each frame during gameplay, maintaining a consistent feedback loop between the game environment and the learning model. 
-The implementation ensures that state observations, rewards, and actions are synchronized properly, preventing timing issues that could otherwise lead to misaligned learning experiences.
+The implementation ensures that state observations, rewards, and actions are synchronised properly, preventing timing issues that could otherwise lead to misaligned learning experiences.
 
 The code excerpt below illustrates the essential communication pattern written in GDScript:
 
@@ -245,13 +245,13 @@ For the reinforcement learning component, I implemented a Deep Q-Network (DQN) a
 After considering various neural network architectures, I selected a convolutional DQN model that could efficiently process the 2D grid observation data from the game environment:
 
 \begin{itemize}
-    \item \textbf{Input Layer}: Accepts the 7×7 grid observation (49 values) reshaped into a 2D format
-    \item \textbf{Convolutional Layer}: A 2D convolutional layer with 16 filters, kernel size of 3×3, stride of 1, and padding of 1, enabling the network to detect spatial patterns in the environment
-    \item \textbf{Hidden Layers}: Two fully-connected layers with 128 neurons each and ReLU activation functions
-    \item \textbf{Output Layer}: A fully-connected layer with 4 outputs corresponding to the possible actions (move left, move right, jump, do nothing)
+    \item \textbf{Input Layer}: Accepts the 7×7 grid observation (49 values) reshaped into a 2D format.
+    \item \textbf{Convolutional Layer}: A 2D convolutional layer with 16 filters, kernel size of 3×3, stride of 1, and padding of 1, enabling the network to detect spatial patterns in the environment.
+    \item \textbf{Hidden Layers}: Two fully-connected layers with 128 neurons each and ReLU activation functions.
+    \item \textbf{Output Layer}: A fully-connected layer with 4 outputs corresponding to the possible actions (move left, move right, jump, do nothing).
 \end{itemize}
 
-The convolutional layer was particularly important for this implementation as it allows the model to recognize patterns in the spatial arrangement of walls, empty spaces, and the goal within the observation window. 
+The convolutional layer was particularly important for this implementation as it allows the model to recognise patterns in the spatial arrangement of walls, empty spaces, and the goal within the observation window. 
 This spatial awareness is critical for navigating the platformer environment effectively. Below is a code listing of the Pytorch model definition.
 \singlespaced
 \begin{verbatim}
@@ -296,9 +296,9 @@ The training strategy incorporated several key techniques to enhance learning an
 Epsilon-greedy exploration was implemented, beginning with a high exploration rate that gradually decreased over time, creating an effective balance between exploring new strategies and exploiting learned knowledge. 
 This approach allowed the agent to discover potentially valuable actions early in training while increasingly focusing on optimal strategies as training progressed. 
 A target network was employed as a separate network with parameters periodically updated from the main network, providing stable Q-value targets during training and mitigating the risk of divergence that can occur in Q-learning when the same values are both predicted and used as training targets.
-The Adam optimizer was selected with a learning rate of 0.001 for its adaptive learning rate capabilities, allowing for efficient parameter updates that dynamically adjusted based on gradient history. 
-This optimizer helped navigate the complex loss landscape more effectively than traditional stochastic gradient descent. 
-Finally, Mean Squared Error was used as the loss function between predicted Q-values and target Q-values, providing a differentiable metric that penalized large prediction errors more heavily, guiding the network toward more accurate action-value estimations and ultimately more optimal decision-making policies.
+The Adam optimiser was selected with a learning rate of 0.001 for its adaptive learning rate capabilities, allowing for efficient parameter updates that dynamically adjusted based on gradient history. 
+This optimiser helped navigate the complex loss landscape more effectively than traditional stochastic gradient descent. 
+Finally, Mean Squared Error was used as the loss function between predicted Q-values and target Q-values, providing a differentiable metric that penalised large prediction errors more heavily, guiding the network toward more accurate action-value estimations and ultimately more optimal decision-making policies.
 
 \subsubsection{Replay Buffer}
 
@@ -342,6 +342,14 @@ The training process operated on a cycle-by-cycle basis with the game environmen
 
 During training, the epsilon value (controlling exploration vs. exploitation) decayed from an initial value of 0.9 to a minimum of 0.1, 
 allowing the agent to gradually transition from predominantly random exploration to informed decision-making based on learned values.
+
+\subsection{Model Checkpointing}
+
+To ensure training progress was preserved across sessions and allow for model evaluation at different training stages, I implemented a model checkpointing system. 
+At regular intervals during training (every 1000 iterations), the system automatically creates a checkpoint file containing the complete model state. 
+These checkpoint files store the current iteration count to preserve the exact position in the training sequence, the model state dictionary containing the complete set of weights and biases for the neural network, the states from the optimiser, the most recent loss value for performance evaluation, and the current epsilon value which maintains the proper exploration/exploitation balance. 
+Each checkpoint is saved with a unique filename incorporating the iteration number, creating a traceable history of the model's evolution throughout training. This systematic approach provides several key benefits: it safeguards against potential training interruptions, enables training to resume from intermediate points without starting over, facilitates comparative analysis between different training stages, and supplies ready-to-use models for the play mode implementation.
+
 
 \section{Integration of AI into Gameplay}
 
