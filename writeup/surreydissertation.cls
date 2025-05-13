@@ -21,6 +21,7 @@
 \RequirePackage{hyperref}
 \RequirePackage{harvard}
 \RequirePackage[centertags,reqno]{amsmath}
+
 \RequirePackage{float}
 
 % Fix for harvard package use with MikTeX and LyX

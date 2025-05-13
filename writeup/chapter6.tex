@@ -1,1 +1,91 @@
 \chapter{Evaluation}
+
+This chapter presents an evaluation of the implemented system, focusing on functionality and performance.
+
+\section{Functional Evaluation}
+All implemented components of the system function as intended. The game mechanics, AI behaviour, and interface elements operate correctly with no significant bugs or issues observed during testing.
+
+\section{AI Performance Evaluation}
+To evaluate the performance of the trained models and demonstrate emergent intelligent behavior, I employed a systematic evaluation methodology. Models were trained for 2000, 4000, and 6000 iterations separately on the different map types. 
+Additionally, a combined model was trained for 6000 iterations on each map type (18000 total iterations).
+Performance testing involved 100 independent attempts for each trained model on each map, with two key metrics recorded: success rate (percentage of attempts where the agent successfully reached the goal) and average completion time in seconds.
+If on an attempt the agent gets stuck and does not finish, then it's time was not counted.
+The evaluation aimed to determine how training iteration count correlates with performance improvements across different environmental challenges. 
+We should expect to see the success rate increase and the completion time decrease as training increases.
+This data was gathered manually by entering into a google sheet.
+
+\subsection{Results}
+
+\begin{table}[H]
+\centering
+\caption{Success Rate (\%) and Average Completion Time (s) on Platforms Map}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
+\hline
+2000 & 66 & 4.0 \\
+\hline
+4000 & 87 & 3.7 \\
+\hline
+6000 & 99 & 3.6 \\
+\hline
+Combined (18000) & 99 & 3.6 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Success Rate (\%) and Average Completion Time (s) on Snake Map}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
+\hline
+2000 & 60 & 3.9 \\
+\hline
+4000 & 85 & 3.7 \\
+\hline
+6000 & 98 & 3.6 \\
+\hline
+Combined (18000) & 97 & 3.6 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Success Rate (\%) and Average Completion Time (s) on Platforms Map}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
+\hline
+2000 & 45 & 4.2 \\
+\hline
+4000 & 84 & 3.8 \\
+\hline
+6000 & 89 & 3.7 \\
+\hline
+Combined (18000) & 92 & 3.7 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Analysis of Results}
+
+The evaluation results demonstrate a clear correlation between training iterations and agent performance across all map types. Several key observations emerge from the data:
+
+\subsection{Effect of Training Duration}
+As training iterations increased from 2000 to 6000, there was a consistent improvement in both success rate and completion time across all map types. 
+The most dramatic improvements occurred between 2000 and 4000 iterations, with more modest gains between 4000 and 6000 iterations, suggesting diminishing returns with extended training.
+
+\subsection{Agent Efficiency}
+The trained agents demonstrate impressive efficiency, with the best models achieving completion times averaging 3.6-3.7 seconds across all maps. 
+This performance is notably faster than typical human completion times, which presents both advantages and challenges for gameplay. 
+While this demonstrates the success of the training methodology, it creates an imbalance in the "play against AI" mode, 
+as human players generally cannot match the speed and consistency of the trained agent, potentially diminishing the enjoyment of competitive gameplay against the AI.
+
+\subsection{Generalization Capability}
+The combined model (trained across all environments) showed excellent generalization capabilities, achieving performance metrics comparable to or slightly better than the specialized models on their respective maps. 
+This suggests the agent successfully learned generalizable navigation strategies rather than merely memorizing specific paths.
+
+\section{Conclusion}

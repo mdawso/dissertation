@@ -50,7 +50,7 @@ In a GOAP system, each action is associated with both preconditions (requirement
 The AI agent uses planning algorithms, commonly A* search, to find the optimal sequence of actions that transforms the current state into the goal state. 
 This approach allows NPCs to solve problems creatively and adapt to unexpected changes in the game environment.
 GOAP gained prominence through its implementation in F.E.A.R. (2005) \cite{thompson2020fear}, where it produced enemies capable of contextually appropriate tactical behaviors like seeking cover, flanking the player, and coordinating with allies. 
-The system's strength lies in its separation of goals (what the agent wants to achieve) from the specific methods to achieve them, creating emergent behavior that can surprise even the developers.
+The system's strength lies in its separation of goals (what the agent wants to achieve) from the specific methods to achieve them.
 While GOAP offers exceptional adaptability and problem-solving capabilities, it comes with higher computational costs and increased implementation complexity compared to FSMs and BTs. Despite these challenges, GOAP remains valuable for games requiring sophisticated AI that can respond intelligently to dynamic and unpredictable gameplay scenarios.
 
 \begin{figure}[H]
@@ -96,7 +96,7 @@ The choice of algorithm depends on factors including the complexity of the state
 Unlike traditional AI techniques, RL offers adaptability to unexpected situations and can discover novel strategies beyond designer expectations. 
 However, these advantages come with challenges including high sample complexity (requiring many environment interactions), difficulty in specifying appropriate reward functions, and potential convergence to suboptimal solutions when trained in limited scenarios.
 
-\subsubsection{The Bellman equation}
+\subsection{The Bellman equation}
 The Bellman equation provides a mathematical foundation for solving Markov Decision Processes (MDPs) by establishing recursive relationships between value functions of different states. 
 It serves as the cornerstone of many RL algorithms.
 The Bellman equation defines the optimal value function $V^*(s)$ for each state $s$ as:
@@ -113,6 +113,7 @@ While solving the Bellman equation exactly requires complete knowledge of the en
 Deep Reinforcement Learning (DRL) combines classical RL with deep neural networks to handle high-dimensional state spaces that would be intractable with traditional tabular methods. 
 This integration enables RL to operate effectively in complex environments with visual inputs, continuous action spaces, and intricate state representations common in modern video games.
 The breakthrough Deep Q-Network (DQN) algorithm, introduced by DeepMind in 2015, demonstrated superhuman performance on Atari games using only pixel inputs and game scores. DQN employs several key innovations including:
+
 \begin{itemize}
     \item Experience replay, which stores and randomly samples past experiences to break correlation between sequential samples
     \item Target networks that stabilize training by reducing moving target problems
@@ -125,3 +126,31 @@ The breakthrough Deep Q-Network (DQN) algorithm, introduced by DeepMind in 2015,
     \caption{Architecture of a Deep Q-Network}
     \label{fig:dqn-architecture}
 \end{figure}
+
+\subsubsection{Experience Replay}
+
+Experience replay is a fundamental technique in deep reinforcement learning that addresses the challenge of correlated samples in sequential learning. 
+While traditional online RL updates parameters based on immediate experiences, experience replay stores transitions $(s_t, a_t, r_t, s_{t+1})$ in a buffer and samples them randomly during training.
+
+This mechanism provides several crucial benefits:
+\begin{itemize}
+    \item It breaks temporal correlations between consecutive training samples that can lead to unstable learning
+    \item It increases data efficiency by allowing experiences to be used multiple times
+    \item It reduces the variance of updates by averaging over different states and actions
+\end{itemize}
+The replay buffer typically maintains a fixed-size queue that stores the $N$ most recent experiences. 
+During the learning phase, mini-batches of transitions are randomly sampled from this buffer to update the neural network parameters, following:
+$$Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma\max_{a'}Q(s',a') - Q(s,a)]$$
+More sophisticated variants include prioritized experience replay, which samples important transitions more frequently based on their temporal-difference error, 
+and hindsight experience replay, which retrospectively generates additional training signals from failed attempts.
+
+
+\subsubsection{Epsilon Decay}
+
+Epsilon-decay represents a critical strategy in exploration-exploitation balance for reinforcement learning algorithms like DQN. 
+During training, agents follow an $\epsilon$-greedy policy where they select the highest-valued action with probability $1-\epsilon$, and choose a random action with probability $\epsilon$.
+Epsilon decay gradually reduces this exploration parameter over time according to a schedule:
+$$\varepsilon_t = \varepsilon_{\text{end}} + (\varepsilon_{\text{start}} - \varepsilon_{\text{end}})e^{-\lambda t}$$
+where $\varepsilon_{\text{start}}$ is the initial value (often near 1.0), $\varepsilon_{\text{end}}$ is the minimum value (typically 0.01-0.1), and $\lambda$ determines the decay rate.
+This approach ensures thorough exploration of the environment initially, when the agent's knowledge is limited, while gradually transitioning to exploitation of learned strategies as training progresses. 
+Properly tuned epsilon decay significantly impacts learning efficiency and final policy quality, particularly in environments with sparse rewards or complex optimal strategies.

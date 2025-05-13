@@ -2,7 +2,7 @@ import torch as T
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-import torch_directml as dml
+#import torch_directml as dml
 import os
 import numpy as np
 import struct
@@ -13,7 +13,7 @@ import argparse
 import glob
 
 # pytorch setup
-device = T.device("cuda" if T.cuda.is_available() else dml.device())
+device = T.device("cuda" if T.cuda.is_available() else "cpu")
 inType = T.float32
 
 # model definition
