@@ -37,14 +37,10 @@ During development, I investigated GPU acceleration options for the machine lear
 Since I have an AMD graphics card that isn't compatible with CUDA, I experimented with \textbf{pytorch-directml} as an alternative acceleration method. 
 DirectML, developed by Microsoft, functions as a translation layer that enables GPU acceleration of machine learning workloads through DirectX. 
 This implementation provides acceleration capabilities for AMD graphics cards but comes with the limitation of only functioning on Windows operating systems.
-However, after thorough testing, I found this additional layer unnecessary as my CPU handled both model training and execution without performance issues.
-Nevertheless, to ensure optimal performance across different hardware configurations, the final implementation includes automatic detection for CUDA support. 
-When running on NVIDIA hardware with appropriate drivers, the application automatically leverages GPU acceleration to enhance model training speed and inference performance. 
-This design decision maintains the project's versatility across various computing environments while optimising performance when possible.
 
 \section{Design of the Game}
 
-For the game component of my project, I decided to develop a 2D tile-based platformer, similar to Super Mario Bros. 
+For the game component of my project, I decided to develop a 2D tile-based platformer, similar to "Super Mario Bros". 
 This decision was driven by several practical considerations. 
 First, 2D platformers offer a good balance between implementation complexity and gameplay depth, making them ideal for academic projects with limited timeframes.
 The tile-based approach simplifies level design, collision detection, and environmental interactions while still allowing for creative gameplay mechanics. 

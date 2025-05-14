@@ -6,104 +6,48 @@ This chapter presents an evaluation of the implemented system, focusing on funct
 All implemented components of the system function as intended. The game mechanics, AI interaction, and interface elements operate correctly with no significant bugs or issues observed during testing.
 
 \section{AI Performance Evaluation}
-To evaluate the performance of the trained models and demonstrate emergent intelligent behavior, I employed a systematic evaluation methodology. Models were trained for 2000, 4000, and 6000 iterations separately on the different map types. 
-Additionally, a combined model was trained for 6000 iterations on each map type (18000 total iterations).
-Performance testing involved 100 independent attempts for each trained model on each map, with two key metrics recorded: success rate (percentage of attempts where the agent successfully reached the goal) and average completion time in seconds.
-If on an attempt the agent gets stuck and does not finish, then it's time was not counted.
-The evaluation aimed to determine how training iteration count correlates with performance improvements across different environmental challenges. 
-We should expect to see the success rate increase and the completion time decrease as training increases.
-This data was gathered manually by entering into an excel document.
+To evaluate the performance of a trained model and demonstrate emergent intelligent behavior, I employed the following evaluation methodology:
+I trained a model for 10000 iterations on the pillars map type, 10000 on the snake map type, and 10000 on the platforms map type for 30000 total iterations.
+The model was then tested for 100 iterations on each map type, noting it's success rate and average completion time.
+From the fully trained model, we should see high success rate and consistent completion time.
 
 \subsection{Results}
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
-\caption{Success Rate (\%) and Average Completion Time (s) on Platforms Map}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|c|c|}
 \hline
-\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
+\textbf{Map Type} & \textbf{Success Rate (\%)} & \textbf{Average Completion Time (s)} \\
 \hline
-2000 & 66 & 4.0 \\
+Pillars & 98 & 3.1 \\
 \hline
-4000 & 87 & 3.7 \\
+Snake & 99 & 3.0 \\
 \hline
-6000 & 99 & 3.6 \\
-\hline
-Combined (18000) & 99 & 3.6 \\
+Platforms & 22 & 4.2 \\
 \hline
 \end{tabular}
+\caption{Performance of trained model across different map types}
+\label{tab:model_performance}
 \end{table}
 
-\begin{table}[H]
-\centering
-\caption{Success Rate (\%) and Average Completion Time (s) on Snake Map}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
-\hline
-2000 & 60 & 3.9 \\
-\hline
-4000 & 85 & 3.7 \\
-\hline
-6000 & 98 & 3.6 \\
-\hline
-Combined (18000) & 97 & 3.6 \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Success Rate (\%) and Average Completion Time (s) on Platforms Map}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Training Iterations} & \textbf{Success Rate (\%)} & \textbf{Avg. Completion Time (s)} \\
-\hline
-2000 & 12 & 4.2 \\
-\hline
-4000 & 32 & 3.8 \\
-\hline
-6000 & 38 & 3.7 \\
-\hline
-Combined (18000) & 52 & 4.2 \\
-\hline
-\end{tabular}
-\end{table}
-
-\section{Analysis of Results}
-
-The evaluation results demonstrate clear trends across training iterations and map types:
-
-\begin{itemize}
-    \item \textbf{Training Iterations}: There is a consistent positive correlation between the number of training iterations and performance metrics. 
-    As training iterations increase from 2000 to 6000, success rates improve substantially across all map types, while completion times generally decrease.
-
-    \item \textbf{Map Complexity}: Performance varies significantly between map types, suggesting differing levels of complexity. 
-    The Platforms and Snake maps show similar performance profiles, with high success rates (99\% and 98\% respectively) at 6000 iterations. 
-    The third map appears considerably more challenging, achieving only 38\% success rate even after 6000 iterations.
-    This is due to it being the only map that the AI can fail to an environmental hazard on (the kill plane).
-    Future work needs to be done on improving the AI's ability to navigate these.
-    
-    \item \textbf{Combined Model}: The combined model (18000 total iterations) performs comparably to the 6000-iteration specialised models on simpler maps but shows meaningful improvement on the most complex map (52\% success rate compared to 38\%). 
-    This suggests that exposure to multiple environments enhances generalisation capabilities, particularly beneficial for navigating difficult terrains.
-    
-    \item \textbf{Diminishing Returns}: The improvement rate slows between 4000 and 6000 iterations, particularly for completion times, indicating a potential plateau in performance gains with additional training beyond certain thresholds.
-\end{itemize}
-
-These results affirm that reinforcement learning successfully produces increasingly capable agents with more training, though environmental complexity remains a significant factor affecting overall performance. 
-The enhanced performance of the combined model on complex terrains highlights the value of diverse training experiences.
+The results show strong performance on the pillars and snake maps, with success rates of 98\% and 99\% respectively. However, the model struggled significantly with the platforms map type, achieving only a 22\% success rate. 
+This suggests that the presence of gaps in the floor, and the kill plane in the platforms environment creates challenges that the model has difficulty generalizing to, despite substantial training.
+I also noticed that after training on the platforms map, the model developed a tendency to jump more than it needed to. This carried into the other maps and tended to harm its completion time.
+This suggests that there is a degree of model instability. Future work could be done on the reward structure to remedy this
+I also noted that the model is usually significantly faster at completing the maps than human players can. This is due to the model being able to perform frame perfect inputs (eg: jumping the same frame it hits the ground) 
+that a human could not do consistently. This harms the final implementation where the model sets a time to beat for a human.
 
 \section{Conclusion}
 
 The evaluation results demonstrate that this project successfully achieved its primary objectives. 
 The reinforcement learning model was effectively implemented within the Godot game engine environment, producing agents capable of navigating complex terrain and completing objectives autonomously. 
-The trained models exhibited meaningful improvement with increased training iterations, demonstrating the efficacy of the reinforcement learning approach in this context.
+The trained model exhibited meaningful improvement with increased training iterations, demonstrating the efficacy of the reinforcement learning approach in this context.
 Performance metrics reveal that the models achieved high success rates on two of the three map types, with completion times that indicate efficient pathfinding capabilities. 
 The combined training approach proved particularly valuable for enhancing generalisation across different environmental challenges. 
 These outcomes validate the core premise that reinforcement learning can produce capable game agents through progressive training.
 However, several limitations were identified that warrant future improvement. 
 Most notably, the models struggled significantly with the platforms map type, where the environmental hazard of the kill plane posed a greater challenge than in other environments. 
-The substantially lower success rate in this map type (peaking at 52\% even with the combined model) indicates that more sophisticated training approaches may be necessary for handling complex failure conditions.
+The substantially lower success rate in this map type (peaking at 22\%) indicates that more sophisticated training approaches may be necessary for handling complex failure conditions.
 Additionally, the agents consistently completed tasks faster than human players would typically achieve, which presents challenges for balanced gameplay implementation. 
 While computational efficiency is generally desirable, agents that move unnaturally quickly or efficiently may not provide satisfying gameplay experiences when incorporated into competitive or cooperative scenarios with human players.
 Future work should focus on addressing these limitations through more specialised training techniques for hazardous environments and potentially incorporating mechanisms to modulate agent performance to better match human capabilities in gameplay scenarios.

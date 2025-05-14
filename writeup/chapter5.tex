@@ -170,9 +170,9 @@ This approach allows the game state to be effectively transmitted to the model f
 After evaluating several options for inter-process communication, I selected a TCP socket-based approach with JSON encoding for several key reasons:
 
 \begin{itemize}
-    \item \textbf{Reliability}: TCP's connection-oriented nature ensures that no state observations or action commands are lost during transmission
+    \item \textbf{Reliability}: TCP's connection-oriented nature ensures that no state observations or action commands are lost during transmission.
     \item \textbf{Cross-platform compatibility}: The socket-based approach works seamlessly across different operating systems. The JSON encoding also ensures that the state and reward data is encoded and decoded the same on both the Godot side and the Python side.
-    \item \textbf{Low implementation overhead}: Both Godot and Python offer built-in libraries for TCP communication without requiring additional dependencies
+    \item \textbf{Low implementation overhead}: Both Godot and Python offer built-in libraries for TCP communication without requiring additional dependencies.
 \end{itemize}
 
 To implement this, I used the \textit{socket} library on the python side, and a \textit{StreamPeerTCP} node on the Godot side.

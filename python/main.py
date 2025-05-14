@@ -2,7 +2,7 @@ import torch as T
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-#import torch_directml as dml
+import torch_directml as dml
 import os
 import numpy as np
 import struct
@@ -13,7 +13,7 @@ import argparse
 import glob
 
 # pytorch setup
-device = T.device("cuda" if T.cuda.is_available() else "cpu")
+device = dml.device()
 inType = T.float32
 
 # model definition
@@ -209,7 +209,7 @@ def train_model():
                 print(f"Model checkpoint saved to {checkpoint_path}")
 
 def play_model():
-    """Run the model in play mode using the latest checkpoint."""
+    #Run the model in play mode using the latest checkpoint
     n_observations = 49
     n_actions = 4
     
