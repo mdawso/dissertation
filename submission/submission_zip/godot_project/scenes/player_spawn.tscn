@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://i5wyof3qs4x2"]
+
+[sub_resource type="GDScript" id="GDScript_qp51r"]
+script/source = "extends Node2D
+
+const PLAYER = preload(\"res://scenes/player.tscn\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var newPlayer := PLAYER.instantiate()
+	newPlayer.global_position = global_position
+	get_parent().get_parent().add_child.call_deferred(newPlayer)
+"
+
+[node name="PlayerSpawn" type="Node2D"]
+script = SubResource("GDScript_qp51r")

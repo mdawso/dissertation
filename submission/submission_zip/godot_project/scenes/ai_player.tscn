@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw8gggiptdfd8"]
+
+[ext_resource type="Script" path="res://scripts/ai_player.gd" id="1_j44xe"]
+[ext_resource type="Texture2D" uid="uid://cxejwu8sns1h2" path="res://assets/ai_player.png" id="1_wvl6q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dr2ca"]
+size = Vector2(16, 16)
+
+[node name="AIPlayer" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 21
+script = ExtResource("1_j44xe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dr2ca")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wvl6q")
+
+[node name="FinishLineRaycast" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(50, -50)
+
+[node name="DEBUG_FinishLineVector" type="Line2D" parent="FinishLineRaycast"]
+unique_name_in_owner = true
+visible = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 2.0
+
+[node name="DEBUG_FinishLineVectorLengthLabel" type="Label" parent="FinishLineRaycast/DEBUG_FinishLineVector"]
+unique_name_in_owner = true
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+
+[node name="DEBUG_VisibleTileLabels" type="Node2D" parent="."]
+unique_name_in_owner = true
+top_level = true
+
+[node name="DEBUG_CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="DEBUG_StateLabel" type="Label" parent="DEBUG_CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.5
+offset_right = 40.5
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+text = "state label"

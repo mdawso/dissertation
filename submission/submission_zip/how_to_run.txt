@@ -1,0 +1,28 @@
+this project has two components, a godot project contained in godot_project and a python project contained in python.
+to run the python portion of this project you will need to be on windows.
+
+to run the godot project, download godot engine 4.3 from https://godotengine.org/download/archive/4.3-stable/
+within godot, import the godot_project folder as a project, it should then appear in the list. double click to open it.
+to play the project, press f5 or click the play button in the top right hand corner of the editor
+
+to run the python project you must have python version 3.12.8 with the following packages installed
+torch-directml
+numpy
+
+the python project is run through the main.py file located in the python folder. I have provided a fully trained model file that you can run.
+to run it, run: 
+main.py --mode play
+this will load the latest checkpoint file located in the same directory as main.py.
+
+then, run the godot project. godot will connect to python when you click "Training/Eval Mode" or "Player Mode" within godot.
+I would recommend running it in training/eval mode so the model plays over and over again without stopping.
+you must do this each time you want to run it.
+
+if you would like to train a new model, move the model_checkpoint_20000 file to another directory and delete it.
+then run:
+main.py --mode train
+then run godot in training mode as before. The model will run around randomly for a while then begin to converge to a policy. For best results train the model on pillars for 6000-10000 iterations, then snake for 6000-10000 iterations.
+this will start creating new checkpoint files within the same directory as main.py, every 1000 iterations
+
+I demonstrate how to run this in the demo video, consult that if you have trouble.
+thanks

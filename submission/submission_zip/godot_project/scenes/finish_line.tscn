@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bg5bu5lp34p1r"]
+
+[ext_resource type="Texture2D" uid="uid://ew2g2ogqvijb" path="res://assets/goal_small.png" id="1_3s2ic"]
+
+[sub_resource type="GDScript" id="GDScript_f388f"]
+script/source = "extends Area2D
+
+@onready var collision_shape_2d: CollisionShape2D = %CollisionShape2D
+
+func _ready() -> void:
+	Globals.FinishLine = self
+	
+func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
+	
+	if body.has_method(\"stop_timer\"):
+		body.stop_timer()
+	
+	if body.has_method(\"reset\"):
+		body.reset()
+		
+	if body.has_method(\"apply_win_reward\"):
+		body.apply_win_reward()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ca68p"]
+size = Vector2(16, 16)
+
+[node name="FinishLine" type="Area2D"]
+collision_layer = 4
+collision_mask = 10
+script = SubResource("GDScript_f388f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(8, -8)
+shape = SubResource("RectangleShape2D_ca68p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+texture = ExtResource("1_3s2ic")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

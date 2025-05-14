@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://2sle8kpjmb6y"]
+
+[ext_resource type="Texture2D" uid="uid://c4f8f5sr8tyqv" path="res://assets/spike.png" id="1_hxi6t"]
+
+[sub_resource type="GDScript" id="GDScript_jmt81"]
+script/source = "extends Area2D
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.has_method(\"reset\"):
+		body.reset()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upmf2"]
+size = Vector2(16, 16)
+
+[node name="Spike" type="Area2D"]
+collision_layer = 16
+collision_mask = 10
+script = SubResource("GDScript_jmt81")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hxi6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_upmf2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

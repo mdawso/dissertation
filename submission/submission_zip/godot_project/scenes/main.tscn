@@ -1,0 +1,181 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmh3ltyxptck"]
+
+[ext_resource type="Theme" uid="uid://11aga3604cn0" path="res://scenes/ui_theme.tres" id="1_ye4hc"]
+[ext_resource type="FontFile" uid="uid://blmbrcsa4r3ox" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_fo3s8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xhjc7"]
+font_size = 56
+
+[sub_resource type="GDScript" id="GDScript_yv03p"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/game.tscn\")
+"
+
+[sub_resource type="GDScript" id="GDScript_it0ki"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	MapSettings.PlayerEnabled = true
+	get_tree().change_scene_to_file(\"res://scenes/game.tscn\")
+"
+
+[sub_resource type="GDScript" id="GDScript_5k0wr"]
+script/source = "extends Button
+
+func _on_pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id="GDScript_x7wl4"]
+script/source = "extends CheckButton
+
+func _on_toggled(toggled_on: bool) -> void:
+	MapSettings.rand = toggled_on
+	print(\"Map Randomisation set to \" + str(MapSettings.rand))
+"
+
+[sub_resource type="GDScript" id="GDScript_aifvi"]
+script/source = "extends OptionButton
+
+@onready var popup := get_popup()
+
+func _ready() -> void:
+	popup.id_pressed.connect(mapChoice)
+
+func mapChoice(id : int) -> void:
+	MapSettings.MapType = id
+	print(\"Map Type set to \" + str(MapSettings.MapType))
+"
+
+[sub_resource type="GDScript" id="GDScript_s34f8"]
+script/source = "extends CheckButton
+
+func _on_toggled(toggled_on: bool) -> void:
+	MapSettings.AIDebugLabels = toggled_on
+	print(\"AI Debug Labels set to \" + str(MapSettings.AIDebugLabels))
+"
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainerTop" type="VBoxContainer" parent="MainMenu/CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MainMenu/CenterContainer/VBoxContainerTop"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "The Game"
+label_settings = SubResource("LabelSettings_xhjc7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainerButtons" type="VBoxContainer" parent="MainMenu/CenterContainer/VBoxContainerTop"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+
+[node name="EvalButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "Training/Eval Mode
+"
+script = SubResource("GDScript_yv03p")
+
+[node name="PlayerButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "Player Mode"
+script = SubResource("GDScript_it0ki")
+
+[node name="QuitButton" type="Button" parent="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons"]
+layout_mode = 2
+theme = ExtResource("1_ye4hc")
+text = "Quit"
+script = SubResource("GDScript_5k0wr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 510.0
+offset_bottom = 58.0
+
+[node name="Label" type="Label" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fo3s8")
+text = "Map Settings"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="MapRandButton" type="CheckButton" parent="MainMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fo3s8")
+button_pressed = true
+text = "Map Randomisation"
+script = SubResource("GDScript_x7wl4")
+
+[node name="MapTypeButton" type="OptionButton" parent="MainMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fo3s8")
+selected = 0
+item_count = 3
+popup/item_0/text = "Pillars"
+popup/item_1/text = "Snake"
+popup/item_1/id = 1
+popup/item_2/text = "Platforms"
+popup/item_2/id = 2
+script = SubResource("GDScript_aifvi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -298.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 54.0
+grow_horizontal = 0
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fo3s8")
+text = "Debug Settings"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="DebugLabelsButton" type="CheckButton" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_fo3s8")
+text = "AI Debug Labels"
+script = SubResource("GDScript_s34f8")
+
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/EvalButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/EvalButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayerButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/PlayerButton" method="_on_pressed"]
+[connection signal="pressed" from="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" to="MainMenu/CenterContainer/VBoxContainerTop/VBoxContainerButtons/QuitButton" method="_on_pressed"]
+[connection signal="toggled" from="MainMenu/VBoxContainer/HBoxContainer/MapRandButton" to="MainMenu/VBoxContainer/HBoxContainer/MapRandButton" method="_on_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer2/DebugLabelsButton" to="VBoxContainer/HBoxContainer2/DebugLabelsButton" method="_on_toggled"]

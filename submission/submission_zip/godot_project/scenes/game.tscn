@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b365pmg7spbq"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_rqp0u"]
+[ext_resource type="PackedScene" uid="uid://ds271o3vqiqkf" path="res://scenes/map_base.tscn" id="2_g0l1m"]
+[ext_resource type="PackedScene" uid="uid://bg5bu5lp34p1r" path="res://scenes/finish_line.tscn" id="3_2lyf8"]
+[ext_resource type="PackedScene" uid="uid://brbdt22mxhc63" path="res://scenes/kill_plane.tscn" id="6_i3a8q"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_rqp0u")
+
+[node name="World" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Layer0" parent="World" instance=ExtResource("2_g0l1m")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Spawns" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-376, -8)
+
+[node name="FinishLine" parent="." instance=ExtResource("3_2lyf8")]
+position = Vector2(368, 0)
+
+[node name="KillPlane" parent="." instance=ExtResource("6_i3a8q")]
+position = Vector2(0, 204)
