@@ -1,4 +1,4 @@
-Godot Version 4.3
-
-Python Version 3.12.8 
-pip install torch-directml numpy ipykernel
+- Godot Version 4.3
+- Python Version 3.12.8 
+- pip install torch-directml numpy ipykernel
+- main.py --mode [play, train] to play or train a model
